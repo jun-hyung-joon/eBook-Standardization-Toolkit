@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "epub-accessibility-ai-toolkit"
-version = "2.0.0"
+version = "1.0.0"
 description = "AI-powered EPUB accessibility improvement toolkit using Claude, GPT, Gemini, and Grok"
 readme = "README.md"
 requires-python = ">=3.8"

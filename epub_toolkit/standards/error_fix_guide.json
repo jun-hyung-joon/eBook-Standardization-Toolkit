@@ -1,9 +1,9 @@
 {
   "metadata": {
     "title": "EPUB 3.3 Error Fix Precision Guide (Hyphenated Keys)",
-    "description": "251 error codes based on EPUBCheck 5.2.1 (hyphen key format)",
-    "version": "3.6.0",
-    "updated": "2025-01-10"
+    "description": "251 error codes based on EPUBCheck 5.3.0 (hyphen key format)",
+    "version": "1.0.0",
+    "updated": "2025-11-20"
   },
   "global_rules": {
     "standard_compliance": "Strictly fix errors to comply with the W3C EPUB 3.3 standard.",
