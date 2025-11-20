@@ -1,0 +1,103 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel>=0.40.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "epub-accessibility-ai-toolkit"
+version = "1.0.0"
+description = "AI-powered EPUB accessibility improvement toolkit using Claude, GPT, Gemini, and Grok"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+authors = [
+    {name = "jun-hyung-joon", email = "siomaaaaa@gmail.com"},
+]
+maintainers = [
+    {name = "jun-hyung-joon", email = "siomaaaaa@gmail.com"},
+]
+keywords = [
+    "epub", 
+    "accessibility", 
+    "ai", 
+    "claude", 
+    "gpt", 
+    "gemini",
+    "epubcheck"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Text Processing :: Markup :: HTML",
+    "Topic :: Text Processing :: Markup :: XML",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+# ✅ Keep only core dependencies (based on actual code usage)
+dependencies = [
+    # AI API Clients
+    "anthropic>=0.3.0",
+    "openai>=1.0.0", 
+    "google-generativeai>=0.3.0",
+    
+    # EPUB & XML Processing
+    "ebooklib>=0.18",
+    "beautifulsoup4>=4.12.0",
+    "lxml>=4.9.0",
+    
+    # Configuration & Utils
+    "PyYAML>=6.0.1",
+    "python-dotenv>=1.0.0",
+    "requests>=2.31.0",     # for downloader
+    "tqdm>=4.66.0",         # for progress bar
+    "colorama>=0.4.6",      # for terminal colors
+]
+
+[project.optional-dependencies]
+# Development and testing tools
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/jun-hyung-joon/eBook-Standardization-Toolkit"
+Repository = "https://github.com/jun-hyung-joon/eBook-Standardization-Toolkit.git"
+
+[project.scripts]
+epub-ai = "main:main"
+
+# --- Code quality tool settings ---
+
+[tool.black]
+line-length = 100
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  \.git
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_output = 3
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"

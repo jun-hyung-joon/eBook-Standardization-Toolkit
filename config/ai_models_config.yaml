@@ -1,0 +1,231 @@
+# =============================================================================
+# EPUB Accessibility AI Toolkit 
+# =============================================================================
+
+# Application information
+app_info:
+  name: "EPUB Standardization AI Toolkit"
+  version: "2.0.0"
+  description: "EPUBCheck + AI = Perfect EPUB 3 compliance"
+  banner: "🚀 EPUB Standardization AI Toolkit"
+  author: "jun-hyung-joon"
+  license: "MIT"
+  github_url: "https://github.com/jun-hyung-joon/eBook-Accessibility-Toolkit"
+
+# AI behavior settings
+ai_behavior:
+  default_provider: "gemini"
+  max_retries: 3
+  retry_delay_seconds: 2
+  require_api_key: true
+  strict_api_validation: true
+  fail_without_api: true
+
+# AI model settings
+models:
+  claude:
+    default: "claude-sonnet-4-20250514"
+    env_var: "ANTHROPIC_API_KEY"
+    key_prefix: "sk-ant-"
+    max_tokens: 4000
+    import_path: "anthropic"
+    client_class: "Anthropic"
+    test_content: "Hello"
+    
+  gpt:
+    default: "gpt-4o"
+    env_var: "OPENAI_API_KEY"
+    key_prefix: "sk-"
+    max_tokens: 4000
+    import_path: "openai"
+    client_class: "OpenAI"
+    test_content: "Hello"
+    
+  gemini:
+    default: "gemini-2.5-flash"
+    env_var: "GOOGLE_API_KEY"
+    key_prefix: "AI"
+    max_tokens: 4000
+    import_path: "google.generativeai"
+    client_class: "GenerativeModel"
+    test_content: "Hello"
+    
+  grok:
+    default: "grok-2"
+    env_var: "XAI_API_KEY"
+    key_prefix: "xai-"
+    max_tokens: 4000
+    import_path: "openai"
+    client_class: "OpenAI"
+    base_url: "https://api.x.ai/v1"
+    test_content: "Hello"
+
+# External tools settings
+external_tools:
+  epubcheck:
+    github_repo: "w3c/epubcheck"
+    api_url: "https://api.github.com/repos/w3c/epubcheck/releases/latest"
+    download_pattern: "https://github.com/w3c/epubcheck/releases/download/{tag_name}/epubcheck-{version}.zip"
+    install_dir: "~/.epub_toolkit/epubcheck"
+    jar_name: "epubcheck.jar"
+    timeout: 60
+    java_min_version: 8
+    script_name: "epubcheck.sh"
+    version_command: "--version"
+
+# API connection settings
+api_settings:
+  timeout: 120
+  max_concurrent_requests: 3
+  connection_test_timeout: 10
+  max_test_tokens: 10
+
+# File processing settings
+file_processing:
+  max_file_size_mb: 500
+  supported_extensions: [".epub"]
+  output_suffix: "_standardized"
+  temp_dir_prefix: "epub_toolkit_"
+  backup_enabled: true
+  min_file_size_bytes: 1024
+  max_file_size_bytes: 524288000  # 500MB
+  
+  compression:
+    method: "ZIP_DEFLATED"
+    mimetype_compression: "ZIP_STORED"
+    
+  validation:
+    required_files: ["mimetype"]
+    required_extensions: [".opf", ".html", ".xhtml"]
+    image_extensions: [".jpg", ".jpeg", ".png", ".gif", ".svg"]
+    css_extensions: [".css"]
+
+# Processing defaults
+processing_defaults:
+  target_standard: "EPUB 3.3"
+  max_file_size_mb: 500
+  create_backup: true
+  preserve_original: true
+  language: "auto"
+  timezone: "Asia/Seoul"
+
+# Output settings
+output_settings:
+  validate_output: true
+  output_suffix: "_standardized"
+  generate_report: true
+  report_format: "json"
+
+# Logging settings
+logging_settings:
+  level: "INFO"
+  quiet_mode: false
+  format: "%(message)s"
+
+# Validation messages settings
+messages:
+  success:
+    perfect_standard: "🎉 Perfect EPUB 3 compliance!"
+    epubcheck_zero: "✅ EPUBCheck: 0 errors"
+    standards_compliance: "🏆 Full EPUB 3 compliance"
+    conversion_complete: "✅ Conversion complete!"
+    already_perfect: "✅ EPUB is already perfect!"
+    
+  errors:
+    file_not_found: "❌ File not found"
+    not_epub: "❌ Not an EPUB file"
+    processing_failed: "❌ Processing failed"
+    api_key_missing: "❌ API key is not set"
+    tool_missing: "❌ Required tool missing"
+    
+  warnings:
+    remaining_issues: "⚠️ Some issues remain"
+    manual_review: "💡 Manual review recommended"
+    no_ai_available: "⚠️ No AI available"
+    
+  info:
+    starting_conversion: "📚 Starting EPUB standardization"
+    initial_validation: "🔍 Performing initial validation..."
+    ai_improvement: "🤖 AI improvement in progress..."
+    final_validation: "🔍 Performing final validation..."
+    installing_tools: "🔧 Installing external tools..."
+
+# CLI help messages
+cli_help:
+  quick_usage:
+    - "python main.py book.epub              # basic conversion"
+    - "python main.py book.epub --ai gpt     # use GPT"
+    - "python main.py book.epub -v           # verbose logs"
+    - "python main.py --test-ai              # test AI"
+    - "python main.py --install-tools        # install tools"
+    - "python main.py --help                 # full help"
+    
+  requirements:
+    - "• Java 8+ (for EPUBCheck)"
+    - "• AI API key (.env file or environment variables)"
+    
+  goals:
+    - "• EPUBCheck: 0 errors"
+    - "• Full EPUB 3.3 compliance"
+
+# Standards and rules settings
+standards:
+  epub:
+    version: "3.3"
+    spec_url: "https://www.w3.org/TR/epub-33/"
+    
+  wcag:
+    version: "2.2"
+    default_level: "AA"
+    spec_url: "https://www.w3.org/TR/WCAG22/"
+
+# AI prompt templates
+prompts:
+  accessibility_improvement: |
+    You are an expert fully familiar with the EPUB 3 standard.
+    Analyze the following HTML content and fix the errors found by EPUBCheck:
+
+    File name: {file_name}
+
+    EPUBCheck errors:
+    {epubcheck_errors}
+
+    HTML content:
+    {html_content}
+
+    Fix requirements:
+    1. Fix all EPUBCheck errors (ensure EPUB 3 compliance)
+    2. Add appropriate alt attributes to all images
+    3. Fix heading structure (h1-h6) to a logical hierarchy
+    4. Add appropriate caption, scope, and headers attributes to tables
+    5. Provide clear text for links
+    6. Connect form elements with appropriate labels
+    7. Use ARIA attributes correctly
+    8. Actively use semantic HTML elements
+    9. Ensure keyboard-navigable structure
+
+    Goal: Achieve 0 EPUBCheck errors
+
+    Return only the modified HTML. No explanations.
+
+  alt_text_generation: |
+    Generate alternative text in Korean suitable for EPUB e-books based on the image path and context.
+
+    Image path: {image_path}
+    Surrounding context: {context}
+
+    Alt text writing guidelines:
+    1. Be concise and clear (within 150 characters)
+    2. Convey the core information and purpose of the image
+    3. Return an empty string for purely decorative images
+    4. For complex graphs/charts, summarize only the key data
+    5. Write from the perspective of a screen reader user
+
+    Return only the alternative text.
+
+# Debug and development settings
+debug:
+  verbose_mode: false
+  save_temp_files: false
+  detailed_error_output: true
+  performance_monitoring: false

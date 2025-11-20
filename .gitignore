@@ -1,0 +1,84 @@
+# =============================================================================
+# Python basics
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv
+env/
+venv/
+ENV/
+
+# =============================================================================
+# Security (API keys and environment settings) - do NOT commit
+# =============================================================================
+.env
+.env.local
+.env.*
+api_keys.txt
+secrets.json
+credentials.json
+
+# =============================================================================
+# Project outputs and temporary files
+# =============================================================================
+# Generated modified EPUB files
+*.epub
+
+# Log files
+*.log
+logs/
+
+# Temporary working folders (if created locally)
+temp_epub/
+extracted_epub/
+.epub_temp/
+
+# =============================================================================
+# External tools and downloads
+# =============================================================================
+# EPUBCheck download folder
+epubcheck/
+tools/epubcheck/
+
+# =============================================================================
+# Development tool settings
+# =============================================================================
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Testing and coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
