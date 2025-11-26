@@ -185,6 +185,7 @@ class EPUBProcessor:
                             current_content = f.read()
                         
                         file_modified = False
+                        file_deleted = False
                         
                         # Sequential in-memory fix loop
                         for i, error in enumerate(errors, 1):
@@ -194,6 +195,15 @@ class EPUBProcessor:
                             fix_res = intelligent_fixer.fix_file_with_intelligence(
                                 tgt_file, current_content, [error]
                             )
+                            
+                            # Check for file deletion request
+                            if getattr(fix_res, 'delete_file', False):
+                                self.logger.warning(f"       AI requested file deletion: {tgt_file}")
+                                if full_path.exists():
+                                    os.remove(full_path)
+                                    self.logger.info(f"       File deleted.")
+                                file_deleted = True
+                                break
                             
                             if fix_res.success and fix_res.fixed_content != current_content:
                                 current_content = fix_res.fixed_content
@@ -207,10 +217,12 @@ class EPUBProcessor:
                                 self.logger.info(f"      ℹ️ No changes suggested")
                         
                         # Write Once
-                        if file_modified:
+                        if not file_deleted and file_modified:
                             with open(full_path, 'w', encoding='utf-8') as f:
                                 f.write(current_content)
                             self.logger.info(f"    File saved")
+                        elif file_deleted:
+                            self.logger.info(f"    File removed (no write back)")
                         else:
                             self.logger.info(f"   ⏭️ No changes")
 
