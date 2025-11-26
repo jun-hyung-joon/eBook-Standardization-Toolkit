@@ -138,13 +138,6 @@ temp_epub/
 extracted_epub/
 .epub_temp/
 
-# =============================================================================
-# External tools and downloads
-# =============================================================================
-# EPUBCheck download folder
-epubcheck/
-tools/epubcheck/
-.epub_toolkit/
 
 # =============================================================================
 # Development tool settings
@@ -172,4 +165,5 @@ htmlcov/
 test_sample/
 # test_*.py
 test_*.json
+test_*.md
 test_output.epub
