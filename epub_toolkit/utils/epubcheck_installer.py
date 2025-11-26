@@ -41,14 +41,14 @@ def get_latest_release() -> Optional[Dict[str, str]]:
             'download_url': download_url
         }
     except Exception as e:
-        print(f"⚠️ GitHub API error: {e}")
+        print(f"️ GitHub API error: {e}")
         return None
 
 def download_and_extract(download_url: str, install_dir: Path) -> bool:
     """Download ZIP and extract - security improvements"""
     temp_file = None
     try:
-        # ✅ Fix: mktemp() -> NamedTemporaryFile (security)
+        #  Fix: mktemp() -> NamedTemporaryFile (security)
         # Use delete=False to control manual cleanup
         temp_file = tempfile.NamedTemporaryFile(
             suffix="-epubcheck.zip",
@@ -57,28 +57,28 @@ def download_and_extract(download_url: str, install_dir: Path) -> bool:
         temp_zip = temp_file.name
         temp_file.close()  # Close file handle before download
         
-        print(f"📥 Downloading: {download_url}")
+        print(f" Downloading: {download_url}")
         urllib.request.urlretrieve(download_url, temp_zip)
-        print(f"✅ Download complete: {Path(temp_zip).stat().st_size / 1024 / 1024:.1f}MB")
+        print(f" Download complete: {Path(temp_zip).stat().st_size / 1024 / 1024:.1f}MB")
         
         # Remove existing installation directory
         if install_dir.exists():
-            print(f"🗑️ Removing existing installation: {install_dir}")
+            print(f"️ Removing existing installation: {install_dir}")
             shutil.rmtree(install_dir)
         install_dir.mkdir(parents=True, exist_ok=True)
         
         # Extract ZIP archive
-        print(f"📦 Extracting archive...")
+        print(f" Extracting archive...")
         with zipfile.ZipFile(temp_zip, 'r') as zip_ref:
             zip_ref.extractall(install_dir)
         
         # Clean up temporary file
         Path(temp_zip).unlink()
-        print(f"✅ Extraction complete")
+        print(f" Extraction complete")
         return True
         
     except Exception as e:
-        print(f"❌ Download failed: {e}")
+        print(f" Download failed: {e}")
         # Clean up temporary file even on error
         if temp_file and Path(temp_file.name).exists():
             try:
@@ -98,12 +98,12 @@ def create_execution_script(install_dir: Path) -> bool:
                 break
         
         if not epubcheck_version_dir:
-            print(f"❌ Could not find EPUBCheck directory")
-            print(f"📂 Search location: {install_dir}")
-            print(f"📋 Directory contents: {list(install_dir.iterdir())}")
+            print(f" Could not find EPUBCheck directory")
+            print(f" Search location: {install_dir}")
+            print(f" Directory contents: {list(install_dir.iterdir())}")
             return False
         
-        print(f"📂 EPUBCheck directory: {epubcheck_version_dir.name}")
+        print(f" EPUBCheck directory: {epubcheck_version_dir.name}")
         
         # Unix/Mac script
         script_path = install_dir / "epubcheck.sh"
@@ -113,7 +113,7 @@ def create_execution_script(install_dir: Path) -> bool:
             f.write('java -cp "$EPUBCHECK_DIR/*:$EPUBCHECK_DIR/lib/*" com.adobe.epubcheck.tool.Checker "$@"\n')
         
         script_path.chmod(0o755)
-        print(f"✅ Execution script created: {script_path}")
+        print(f" Execution script created: {script_path}")
         
         # Windows batch script (optional)
         bat_path = install_dir / "epubcheck.bat"
@@ -125,9 +125,9 @@ def create_execution_script(install_dir: Path) -> bool:
         return True
         
     except Exception as e:
-        print(f"❌ Script creation failed: {e}")
+        print(f" Script creation failed: {e}")
         import traceback
-        print(f"🔍 Detailed error:\n{traceback.format_exc()}")
+        print(f" Detailed error:\n{traceback.format_exc()}")
         return False
 
 # =============================================================================
@@ -137,24 +137,24 @@ def create_execution_script(install_dir: Path) -> bool:
 def install_latest_epubcheck(force: bool = False) -> bool:
     """Install the latest EPUBCheck - path bug fixes"""
     
-    # ✅ Fix: .eepub_toolkit -> .epub_toolkit
+    #  Fix: .eepub_toolkit -> .epub_toolkit
     install_dir = Path.home() / ".epub_toolkit/epubcheck"
     
     try:
-        print("🔍 Checking for latest EPUBCheck release...")
+        print(" Checking for latest EPUBCheck release...")
         
         # Fetch latest release info
         release_info = get_latest_release()
         if not release_info:
-            print("❌ Could not retrieve latest release information")
-            print("💡 Manual install: https://github.com/w3c/epubcheck/releases")
-            print("💡 Or set a GitHub token: export GITHUB_TOKEN=your_token")
+            print(" Could not retrieve latest release information")
+            print(" Manual install: https://github.com/w3c/epubcheck/releases")
+            print(" Or set a GitHub token: export GITHUB_TOKEN=your_token")
             return False
         
         version = release_info['version']
         download_url = release_info['download_url']
         
-        print(f"📦 Latest version: {version}")
+        print(f" Latest version: {version}")
         
         # Skip if already installed (unless force)
         script_path = install_dir / "epubcheck.sh"
@@ -164,14 +164,14 @@ def install_latest_epubcheck(force: bool = False) -> bool:
                 result = subprocess.run([str(script_path), '--version'], 
                                       capture_output=True, text=True, timeout=10)
                 if result.returncode == 0 and version.lstrip('v') in result.stdout:
-                    print("✅ Latest version is already installed")
-                    print(f"📍 Installation location: {install_dir}")
+                    print(" Latest version is already installed")
+                    print(f" Installation location: {install_dir}")
                     return True
             except Exception as e:
-                print(f"⚠️ Version check failed: {e}")
+                print(f"️ Version check failed: {e}")
         
         # Download and install
-        print(f"📥 Downloading EPUBCheck {version}...")
+        print(f" Downloading EPUBCheck {version}...")
         if not download_and_extract(download_url, install_dir):
             return False
         
@@ -181,7 +181,7 @@ def install_latest_epubcheck(force: bool = False) -> bool:
         
         # Verify installation
         if not script_path.exists():
-            print("❌ Installation verification failed: script missing")
+            print(" Installation verification failed: script missing")
             return False
         
         # Version test
@@ -189,23 +189,23 @@ def install_latest_epubcheck(force: bool = False) -> bool:
             result = subprocess.run([str(script_path), '--version'], 
                                   capture_output=True, text=True, timeout=10)
             if result.returncode == 0:
-                print(f"✅ Installation verification complete:")
+                print(f" Installation verification complete:")
                 print(f"   {result.stdout.strip()}")
             else:
-                print(f"⚠️ Version check failed (code: {result.returncode})")
+                print(f"️ Version check failed (code: {result.returncode})")
         except Exception as e:
-            print(f"⚠️ Version check test failed: {e}")
+            print(f"️ Version check test failed: {e}")
         
-        print(f"🎉 EPUBCheck {version} installed successfully!")
-        print(f"📍 Installation location: {install_dir}")
-        print(f"🔧 Execution script: {script_path}")
+        print(f" EPUBCheck {version} installed successfully!")
+        print(f" Installation location: {install_dir}")
+        print(f" Execution script: {script_path}")
         
         return True
         
     except Exception as e:
-        print(f"❌ Error during installation: {e}")
+        print(f" Error during installation: {e}")
         import traceback
-        print(f"🔍 Detailed error:\n{traceback.format_exc()}")
+        print(f" Detailed error:\n{traceback.format_exc()}")
         return False
 
 def update_epubcheck() -> bool:
@@ -219,12 +219,12 @@ def get_epubcheck_jar_path(auto_install: bool = True, auto_update: bool = False)
     
     # Auto-update
     if auto_update:
-        print("🔄 Checking for EPUBCheck updates...")
+        print(" Checking for EPUBCheck updates...")
         install_latest_epubcheck(force=True)
     
     # Auto-install
     elif auto_install and not script_path.exists():
-        print("📥 EPUBCheck is not installed. Starting automatic installation...")
+        print(" EPUBCheck is not installed. Starting automatic installation...")
         if not install_latest_epubcheck():
             raise RuntimeError("EPUBCheck installation failed")
     
@@ -301,7 +301,7 @@ def check_epubcheck_updates() -> Tuple[bool, Optional[str], Optional[str]]:
                 else:
                     return True, latest_version, f"Update available: {latest_version}"
         except Exception as e:
-            print(f"⚠️ Version check error: {e}")
+            print(f"️ Version check error: {e}")
         
         return True, latest_version, "Unable to determine installation status"
         
@@ -330,7 +330,7 @@ def get_epubcheck_status() -> Dict[str, Any]:
                 if match:
                     version = f"v{match.group(1)}"
         except Exception as e:
-            print(f"⚠️ Version check error: {e}")
+            print(f"️ Version check error: {e}")
     
     return {
         "installed": installed,
@@ -360,16 +360,16 @@ def main():
         
         elif args.check:
             has_update, version, message = check_epubcheck_updates()
-            print(f"🔍 {message}")
+            print(f" {message}")
             if has_update and version:
-                print(f"📦 Latest version: {version}")
-                print(f"💡 Update: python -m epub_toolkit.utils.epubcheck_installer --update")
+                print(f" Latest version: {version}")
+                print(f" Update: python -m epub_toolkit.utils.epubcheck_installer --update")
             return 0
         
         elif args.status:
             status = get_epubcheck_status()
-            print("📊 EPUBCheck installation status:")
-            print(f"   Installed: {'✅' if status['installed'] else '❌'}")
+            print(" EPUBCheck installation status:")
+            print(f"   Installed: {'' if status['installed'] else ''}")
             print(f"   Version: {status['version'] or 'none'}")
             print(f"   Path: {status['install_dir']}")
             print(f"   Script: {status['script_path']}")
@@ -380,11 +380,11 @@ def main():
                                            capture_output=True, text=True, timeout=5)
                 if java_result.returncode == 0:
                     java_version = java_result.stderr.split('\n')[0] if java_result.stderr else "unknown"
-                    print(f"   Java: ✅ {java_version}")
+                    print(f"   Java:  {java_version}")
                 else:
-                    print(f"   Java: ❌ not installed")
+                    print(f"   Java:  not installed")
             except:
-                print(f"   Java: ❌ not installed")
+                print(f"   Java:  not installed")
             
             return 0
         
@@ -402,12 +402,12 @@ def main():
             return 0 if success else 1
             
     except KeyboardInterrupt:
-        print("\n⚠️ User interrupted")
+        print("\n️ User interrupted")
         return 130
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
+        print(f" Error: {str(e)}")
         import traceback
-        print(f"🔍 Detailed error:\n{traceback.format_exc()}")
+        print(f" Detailed error:\n{traceback.format_exc()}")
         return 1
 
 if __name__ == "__main__":

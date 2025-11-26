@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚀 EPUB Accessibility AI Toolkit - main execution script (output ordering optimized)
+ EPUB Accessibility AI Toolkit - main execution script (output ordering optimized)
 """
 
 import os
@@ -44,7 +44,7 @@ def setup_logging(verbose: bool):
     root_logger.addHandler(file_handler)
 
 def main():
-    parser = argparse.ArgumentParser(description='🚀 EPUB Accessibility AI Toolkit')
+    parser = argparse.ArgumentParser(description=' EPUB Accessibility AI Toolkit')
     
     parser.add_argument('input_file', nargs='?', help='Input EPUB file')
     parser.add_argument('-o', '--output', help='Output EPUB filename')
@@ -64,7 +64,7 @@ def main():
     
     try:
         if not args.quiet:
-            logger.info("🚀 EPUB Accessibility AI Toolkit starting")
+            logger.info(" EPUB Accessibility AI Toolkit starting")
             
         if args.ai is None:
             args.ai = get_default_ai()
@@ -75,7 +75,7 @@ def main():
             return 0
         
         if args.install_tools:
-            logger.info("🔧 Installing external tools...")
+            logger.info(" Installing external tools...")
             from epub_toolkit.utils.epubcheck_installer import install_latest_epubcheck
             install_latest_epubcheck()
             return 0
@@ -85,26 +85,26 @@ def main():
             return 1
         
         if not Path(args.input_file).exists():
-            logger.error(f"❌ File not found: {args.input_file}")
+            logger.error(f" File not found: {args.input_file}")
             return 1
         
         processor = EPUBProcessor(verbose=args.verbose)
         
         if args.check_only:
-            logger.info(f"🔍 Running EPUB validation: {args.input_file}")
+            logger.info(f" Running EPUB validation: {args.input_file}")
             result = processor._run_epubcheck(args.input_file)
             raw_log = result.get('stdout', '') + "\n" + result.get('stderr', '')
             errors = processor._parse_epubcheck_text(raw_log)
-            logger.info(f"📊 Number of errors: {len(errors)}")
+            logger.info(f" Number of errors: {len(errors)}")
             if errors:
                 for i, err in enumerate(errors[:10], 1):
                     logger.info(f"   {i}. [{err.error_code}] {err.message}")
             return 0 if not errors else 1
 
         if not args.quiet:
-            logger.info(f"📚 Starting processing")
-            logger.info(f"   📁 Input: {args.input_file}")
-            logger.info(f"   🤖 AI: {args.ai.upper()}")
+            logger.info(f" Starting processing")
+            logger.info(f"    Input: {args.input_file}")
+            logger.info(f"    AI: {args.ai.upper()}")
 
         result = processor.improve_epub(
             input_file=args.input_file,
@@ -114,28 +114,28 @@ def main():
         
         if result.success:
             if not args.quiet:
-                # ✅ Note: output ordering adjusted (repacking already handled by processor)
-                logger.info(f"\n🎉 Processing complete!")
-                logger.info(f"   ✅ Output: {result.output_file}")
-                logger.info(f"   📊 Final errors: {result.epubcheck_errors} errors")
+                #  Note: output ordering adjusted (repacking already handled by processor)
+                logger.info(f"\n Processing complete!")
+                logger.info(f"    Output: {result.output_file}")
+                logger.info(f"    Final errors: {result.epubcheck_errors} errors")
                 
-                # ✅ Print remaining errors only if any, and print at the end
+                #  Print remaining errors only if any, and print at the end
                 if result.epubcheck_errors > 0:
-                    logger.info("\n📊 Final remaining errors list:")
+                    logger.info("\n Final remaining errors list:")
                     for err_str in result.final_errors_list[:20]:
                         logger.info(f"   {err_str}")
                     if len(result.final_errors_list) > 20:
                         logger.info(f"   ... and {len(result.final_errors_list) - 20} more")
             return 0
         else:
-            logger.error(f"\n❌ Processing failed: {result.error_message}")
+            logger.error(f"\n Processing failed: {result.error_message}")
             return 1
 
     except KeyboardInterrupt:
-        logger.warning("\n🛑 Process interrupted by user.")
+        logger.warning("\n Process interrupted by user.")
         sys.exit(130)
     except Exception as e:
-        logger.critical(f"🔥 Fatal error occurred: {e}", exc_info=True)
+        logger.critical(f" Fatal error occurred: {e}", exc_info=True)
         sys.exit(1)
 
 if __name__ == "__main__":

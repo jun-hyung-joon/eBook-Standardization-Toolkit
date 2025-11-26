@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚀 EPUB Processor - Timestamped output version
+ EPUB Processor - Timestamped output version
 
 Features:
 1. Run EPUBCheck (text mode, absolute paths, includes -u option)
@@ -8,7 +8,7 @@ Features:
 3. Intelligent target file routing (JSON-driven)
 4. I/O optimization: Read-Once, Modify-Loop, Write-Once per file
 5. Integrated logging
-6. ✅ Append timestamp to result filename to avoid overwrites
+6.  Append timestamp to result filename to avoid overwrites
 """
 
 import os
@@ -21,7 +21,7 @@ import logging
 import zipfile
 import re
 from pathlib import Path
-from datetime import datetime  # ✅ import for timestamp
+from datetime import datetime  #  import for timestamp
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, field
 
@@ -56,7 +56,7 @@ class EPUBProcessor:
         
         self.epubcheck_jar = self._setup_epubcheck_robust()
         if not self.epubcheck_jar:
-            self.logger.error("❌ EPUBCheck not found. (epubcheck.jar)")
+            self.logger.error(" EPUBCheck not found. (epubcheck.jar)")
             sys.exit(1)
     
     def _setup_epubcheck_robust(self) -> str:
@@ -90,7 +90,7 @@ class EPUBProcessor:
         if not Path(input_file).exists():
             return ProcessingResult(False, error_message=f"File not found: {input_file}", processing_time=0)
         
-        # ✅ If output filename not provided, auto-generate with timestamp
+        #  If output filename not provided, auto-generate with timestamp
         if not output_file:
             p = Path(input_file)
             suffix = self.file_config.get('output_suffix', '_standardized')
@@ -105,8 +105,8 @@ class EPUBProcessor:
         except Exception as e:
             return ProcessingResult(False, error_message=f"AI initialization failed: {e}", processing_time=0)
 
-        self.logger.info(f"🚀 Processing start: {input_file}")
-        self.logger.info(f"💾 Intended output: {output_file}")
+        self.logger.info(f" Processing start: {input_file}")
+        self.logger.info(f" Intended output: {output_file}")
         
         temp_dir = None
         try:
@@ -123,7 +123,7 @@ class EPUBProcessor:
             intelligent_fixer.set_ai_client(ai_coordinator)
             
             # 3. Initial EPUBCheck run
-            self.logger.info("🔍 Running EPUBCheck...")
+            self.logger.info(" Running EPUBCheck...")
             check_result = self._run_epubcheck(str(work_file))
             
             raw_log = check_result['stdout'] + "\n" + check_result['stderr']
@@ -131,23 +131,23 @@ class EPUBProcessor:
 
             if not parsed_errors:
                 if check_result['returncode'] == 0:
-                    self.logger.info("✅ No errors found.")
+                    self.logger.info(" No errors found.")
                     # Even if no errors, create the requested copy (with timestamp)
                     shutil.copy2(str(work_file), output_file)
                     return ProcessingResult(True, output_file, 0, time.time()-start_time, ["No changes"])
                 else:
-                    self.logger.error("\n⚠️ [ERROR] EPUBCheck failed but no parseable errors were found.")
+                    self.logger.error("\n️ [ERROR] EPUBCheck failed but no parseable errors were found.")
                     self.logger.debug(raw_log)
                     return ProcessingResult(False, error_message="EPUBCheck execution failed", processing_time=time.time()-start_time)
             
             # Print detailed error list
-            self.logger.info(f"🔍 Detected {len(parsed_errors)} errors:")
+            self.logger.info(f" Detected {len(parsed_errors)} errors:")
             for i, err in enumerate(parsed_errors, 1):
                 self.logger.info(f"   {i}. [{err.error_code}] {err.message}")
 
             # 4. Extract and fix
             extract_dir = Path(tempfile.mkdtemp(prefix="epub_ext_"))
-            self.logger.info(f"\n📂 Extracting archive...")
+            self.logger.info(f"\n Extracting archive...")
             
             try:
                 with zipfile.ZipFile(str(work_file), 'r') as z:
@@ -164,7 +164,7 @@ class EPUBProcessor:
                     if tgt not in file_map: file_map[tgt] = []
                     file_map[tgt].append(err)
                 
-                self.logger.info(f"🔧 Starting fixes for {len(file_map)} files (sequential)")
+                self.logger.info(f" Starting fixes for {len(file_map)} files (sequential)")
                 
                 fixed_count = 0
                 improvements = []
@@ -174,10 +174,10 @@ class EPUBProcessor:
                     full_path = extract_dir / tgt_file
                     
                     if not full_path.exists():
-                        self.logger.warning(f"   ❌ Missing file: {tgt_file} (skipping)")
+                        self.logger.warning(f"    Missing file: {tgt_file} (skipping)")
                         continue
                     
-                    self.logger.info(f"\n📄 Processing file: {tgt_file} (errors: {len(errors)})")
+                    self.logger.info(f"\n Processing file: {tgt_file} (errors: {len(errors)})")
                     
                     try:
                         # Read Once
@@ -200,9 +200,9 @@ class EPUBProcessor:
                                 file_modified = True
                                 fixed_count += 1
                                 improvements.extend(fix_res.applied_fixes)
-                                self.logger.info(f"      ✅ AI fix applied")
+                                self.logger.info(f"       AI fix applied")
                             elif fix_res.error_messages:
-                                self.logger.warning(f"      ⚠️ Fix failed: {fix_res.error_messages[0]}")
+                                self.logger.warning(f"      ️ Fix failed: {fix_res.error_messages[0]}")
                             else:
                                 self.logger.info(f"      ℹ️ No changes suggested")
                         
@@ -210,7 +210,7 @@ class EPUBProcessor:
                         if file_modified:
                             with open(full_path, 'w', encoding='utf-8') as f:
                                 f.write(current_content)
-                            self.logger.info(f"   💾 File saved")
+                            self.logger.info(f"    File saved")
                         else:
                             self.logger.info(f"   ⏭️ No changes")
 
@@ -218,11 +218,11 @@ class EPUBProcessor:
                         self.logger.warning(f"   ⏭️ Skipping binary file")
                         continue
                     except Exception as e:
-                        self.logger.error(f"   ❌ File processing error: {e}")
+                        self.logger.error(f"    File processing error: {e}")
 
-                self.logger.info(f"\n📊 Total fixes applied: {fixed_count}")
+                self.logger.info(f"\n Total fixes applied: {fixed_count}")
                 
-                self.logger.info("📦 Repacking EPUB...")
+                self.logger.info(" Repacking EPUB...")
                 self._create_epub_zip(extract_dir, str(work_file))
                 
             finally:
@@ -230,7 +230,7 @@ class EPUBProcessor:
             
             # 5. Final validation
             shutil.copy2(str(work_file), output_file)
-            self.logger.info("🔍 Performing final validation...")
+            self.logger.info(" Performing final validation...")
             
             final_res = self._run_epubcheck(str(Path(output_file).resolve()))
             final_log = final_res.get('stdout', '') + "\n" + final_res.get('stderr', '')
