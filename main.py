@@ -30,6 +30,8 @@ def setup_logging(verbose: bool):
     console_handler.setLevel(logging.DEBUG if verbose else logging.INFO)
     console_format = logging.Formatter('%(message)s')
     console_handler.setFormatter(console_format)
+    # Set UTF-8 encoding for Windows console to handle Korean characters
+    console_handler.stream.reconfigure(encoding='utf-8', errors='replace')
     root_logger.addHandler(console_handler)
 
     file_handler = RotatingFileHandler(
@@ -128,14 +130,14 @@ def main():
                         logger.info(f"   ... and {len(result.final_errors_list) - 20} more")
             return 0
         else:
-            logger.error(f"\n Processing failed: {result.error_message}")
+            logger.error(f"\nERROR: Processing failed: {result.error_message}")
             return 1
 
     except KeyboardInterrupt:
-        logger.warning("\n Process interrupted by user.")
+        logger.warning("\nProcess interrupted by user.")
         sys.exit(130)
     except Exception as e:
-        logger.critical(f" Fatal error occurred: {e}", exc_info=True)
+        logger.critical(f"FATAL ERROR: {e}", exc_info=True)
         sys.exit(1)
 
 if __name__ == "__main__":
