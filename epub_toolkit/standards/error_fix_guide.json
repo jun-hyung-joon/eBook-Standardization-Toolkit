@@ -1,1050 +1,1051 @@
 {
-  "type": "uploaded file",
-  "fileName": "error_fix_guide.txt",
-  "fullContent": {
-    "metadata": {
-      "title": "EPUB 3.3 Error Fix Precision Guide (Searchable Text Edition)",
-      "description": "Text-only fallback strategy. All automatic fixes inject the tag '[AUTO-FIX]' for easy searchability by the creator.",
-      "version": "8.0.0",
-      "updated": "2025-11-26"
+  "metadata": {
+    "title": "EPUB 3.3 Error Fix Precision Guide (Final Commercial Fix)",
+    "description": "The ultimate logic for 251 error codes. Combines searchable text markers with precise fixes for persistent errors like RSC-005. Designed for 100% pass rate.",
+    "version": "1.0.9",
+    "updated": "2025-11-27"
+  },
+  "global_rules": {
+    "philosophy": "Practicality & Traceability. No image generation. Replace errors with visible text markers containing '[AUTO-FIX]' so creators can find them easily.",
+    "action_priority": "1. Format Repair. 2. Content Preservation (Unwrap). 3. Text Substitution (Marker). 4. Comment Injection.",
+    "cascade_logic": "Deep Clean: When a resource is removed, replace references with a text span: <span class='auto-fix-marker'>[AUTO-FIX] Resource Removed</span>.",
+    "search_tag": "All injected text or comments MUST include '[AUTO-FIX]'."
+  },
+  "target_overrides": {
+    "RSC-008": "OPF",
+    "RSC-010": "OPF",
+    "RSC-011": "OPF",
+    "OPF-003": "OPF",
+    "OPF-012": "OPF",
+    "OPF-013": "OPF",
+    "OPF-030": "OPF",
+    "OPF-040": "OPF",
+    "OPF-043": "OPF",
+    "OPF-046": "OPF",
+    "OPF-048": "OPF",
+    "OPF-049": "OPF",
+    "OPF-066": "OPF",
+    "OPF-088": "OPF",
+    "OPF-097": "OPF",
+    "NCX-002": "OPF",
+    "MED-003": "OPF",
+    "SCP-010": "OPF",
+    "HTM-014": "OPF",
+    "PKG-020": "OPF",
+    "CSS-015": "XHTML"
+  },
+  "hints": {
+    "ACC-001": {
+      "description": "Missing alt on img/area tags",
+      "hint": "Logic: If decorative, set alt=''. If meaningful context is missing, set alt='[AUTO-FIX] Description Missing'."
     },
-    "global_rules": {
-      "philosophy": "Practicality & Traceability. No image generation. Replace errors with visible text markers containing '[AUTO-FIX]' so creators can find them easily.",
-      "action_priority": "1. Format Repair. 2. Content Preservation (Unwrap). 3. Text Substitution (Marker). 4. Comment Injection.",
-      "cascade_logic": "Deep Clean: When a resource is removed, replace references with a text span: <span class='auto-fix-marker'>[AUTO-FIX] Resource Removed</span>.",
-      "search_tag": "All injected text or comments MUST include '[AUTO-FIX]'."
+    "ACC-002": {
+      "description": "Input element not referenced by label",
+      "hint": "Logic: Generate ID. Inject <label for='ID' class='visually-hidden'>[AUTO-FIX] Input Label</label>."
     },
-    "target_overrides": {
-      "RSC-008": "OPF",
-      "RSC-010": "OPF",
-      "RSC-011": "OPF",
-      "OPF-003": "OPF",
-      "OPF-012": "OPF",
-      "OPF-013": "OPF",
-      "OPF-030": "OPF",
-      "OPF-040": "OPF",
-      "OPF-043": "OPF",
-      "OPF-046": "OPF",
-      "OPF-048": "OPF",
-      "OPF-049": "OPF",
-      "OPF-066": "OPF",
-      "OPF-097": "OPF",
-      "NCX-002": "OPF",
-      "MED-003": "OPF",
-      "SCP-010": "OPF",
-      "HTM-014": "OPF",
-      "PKG-020": "OPF",
-      "CSS-015": "XHTML"
+    "ACC-008": {
+      "description": "Missing landmark nav element",
+      "hint": "Logic: Inject in nav.xhtml: <nav epub:type='landmarks' hidden='hidden'><ol><li><a epub:type='bodymatter' href='(spine_item_1)'>[AUTO-FIX] Start</a></li></ol></nav>."
     },
-    "hints": {
-      "ACC-001": {
-        "description": "Missing alt on img/area tags",
-        "hint": "Logic: If decorative, set alt=''. If meaningful context is missing, set alt='[AUTO-FIX] Description Missing'."
-      },
-      "ACC-002": {
-        "description": "Input element not referenced by label",
-        "hint": "Logic: Generate ID. Inject <label for='ID' class='visually-hidden'>[AUTO-FIX] Input Label</label>."
-      },
-      "ACC-008": {
-        "description": "Missing landmark nav element",
-        "hint": "Logic: Inject in nav.xhtml: <nav epub:type='landmarks' hidden='hidden'><ol><li><a epub:type='bodymatter' href='(spine_item_1)'>[AUTO-FIX] Start</a></li></ol></nav>."
-      },
-      "ACC-009": {
-        "description": "Missing MathML alttext",
-        "hint": "Logic: Add alttext='[AUTO-FIX] Formula'."
-      },
-      "ACC-011": {
-        "description": "Missing title for SVG hyperlink",
-        "hint": "Logic: Insert <title>[AUTO-FIX] Link</title> into SVG <a>."
-      },
-      "ACC-013": {
-        "description": "Inline styles found",
-        "hint": "Logic: Extract to CSS class `.autofix-style`. Comment in CSS: `/* [AUTO-FIX] Extracted inline style */`."
-      },
-      "ACC-014": {
-        "description": "Absolute units for font-size",
-        "hint": "Logic: Convert px to em. Add HTML comment nearby: ``."
-      },
-      "ACC-015": {
-        "description": "Absolute units for line-height",
-        "hint": "Logic: Strip unit. Add HTML comment: ``."
-      },
-      "ACC-016": {
-        "description": "font-size must be relative",
-        "hint": "Logic: Convert to rem. Add comment: ``."
-      },
-      "ACC-017": {
-        "description": "line-height must be relative",
-        "hint": "Logic: Remove unit."
-      },
-      "CHK-001": {
-        "description": "Missing message file",
-        "hint": "System: Re-install EPUBCheck."
-      },
-      "CHK-002": {
-        "description": "Unrecognized message ID",
-        "hint": "System: Update EPUBCheck."
-      },
-      "CHK-003": {
-        "description": "Unrecognized severity",
-        "hint": "System: Check config."
-      },
-      "CHK-004": {
-        "description": "Parameter overflow",
-        "hint": "System: Check config."
-      },
-      "CHK-005": {
-        "description": "Suggestion parameter overflow",
-        "hint": "System: Check config."
-      },
-      "CHK-006": {
-        "description": "Parameter parse failure",
-        "hint": "System: Check config."
-      },
-      "CHK-007": {
-        "description": "Message file processing error",
-        "hint": "System: Check config."
-      },
-      "CHK-008": {
-        "description": "Item processing error",
-        "hint": "Critical: File corrupted. Replace file content with text: '[AUTO-FIX] Fatal File Error - Replaced to prevent crash'."
-      },
-      "CSS-001": {
-        "description": "Contains forbidden properties",
-        "hint": "Logic: Delete property. Add comment: `/* [AUTO-FIX] Removed forbidden property */`."
-      },
-      "CSS-002": {
-        "description": "Empty/NULL reference",
-        "hint": "Logic: Delete line. Add comment: `/* [AUTO-FIX] Removed empty url */`."
-      },
-      "CSS-003": {
-        "description": "Encoding error",
-        "hint": "Logic: Force UTF-8. Prepend `@charset 'UTF-8'; /* [AUTO-FIX] Encoding forced */`."
-      },
-      "CSS-004": {
-        "description": "BOM detected",
-        "hint": "Logic: Save as UTF-8 (No BOM)."
-      },
-      "CSS-005": {
-        "description": "Conflicting fallback styles",
-        "hint": "Logic: Remove duplicate. Add comment: `/* [AUTO-FIX] Removed conflict */`."
-      },
-      "CSS-006": {
-        "description": "Use of fixed positioning",
-        "hint": "Logic: Change to `absolute`. Add comment: `/* [AUTO-FIX] Fixed changed to absolute */`."
-      },
-      "CSS-007": {
-        "description": "Non-standard font reference",
-        "hint": "Logic: Comment out block: `/* [AUTO-FIX] Disabled non-standard font */`."
-      },
-      "CSS-008": {
-        "description": "CSS parsing error",
-        "hint": "Logic: Comment out error block: `/* [AUTO-FIX] CSS Parsing Error Disabled */`."
-      },
-      "CSS-009": {
-        "description": "Potential pagination issues",
-        "hint": "Logic: Remove properties. Add comment: `/* [AUTO-FIX] Removed pagination props */`."
-      },
-      "CSS-010": {
-        "description": "Stylesheet type error",
-        "hint": "Logic: Force `type='text/css'`."
-      },
-      "CSS-012": {
-        "description": "Multiple CSS links",
-        "hint": "Valid: Ignore."
-      },
-      "CSS-013": {
-        "description": "Use of !important",
-        "hint": "Logic: Remove `!important`."
-      },
-      "CSS-015": {
-        "description": "Alternate stylesheet title missing",
-        "hint": "Logic: Add `title='[AUTO-FIX] Alternate'`."
-      },
-      "CSS-017": {
-        "description": "Use of absolute positioning",
-        "hint": "Logic: Warn only. If critical, comment out property with `/* [AUTO-FIX] Disabled absolute pos */`."
-      },
-      "CSS-019": {
-        "description": "Empty @font-face",
-        "hint": "Logic: Delete block."
-      },
-      "CSS-020": {
-        "description": "Invalid font-size value",
-        "hint": "Logic: Set to `1em`. Comment: `/* [AUTO-FIX] Invalid size reset */`."
-      },
-      "CSS-021": {
-        "description": "Invalid system font",
-        "hint": "Logic: Append `, sans-serif`. Comment: `/* [AUTO-FIX] Added generic font */`."
-      },
-      "CSS-022": {
-        "description": "Global margin settings",
-        "hint": "Logic: Change `*` to `body`."
-      },
-      "CSS-023": {
-        "description": "Use of media queries",
-        "hint": "Logic: Remove non-standard block. Comment: `/* [AUTO-FIX] Removed non-standard media */`."
-      },
-      "CSS-024": {
-        "description": "Unused classes",
-        "hint": "Valid: Ignore."
-      },
-      "CSS-025": {
-        "description": "Missing class selectors",
-        "hint": "Logic: Create `.classname { /* [AUTO-FIX] Empty rule */ }`."
-      },
-      "CSS-028": {
-        "description": "Font-face usage warning",
-        "hint": "Logic: If dangerous, delete block. Comment: `/* [AUTO-FIX] Removed unsafe font url */`."
-      },
-      "HTM-001": {
-        "description": "Invalid XML",
-        "hint": "Logic: Fix tags. Add comment at top: ``."
-      },
-      "HTM-002": {
-        "description": "Cannot determine XML version",
-        "hint": "Logic: Prepend XML declaration."
-      },
-      "HTM-003": {
-        "description": "External entity usage",
-        "hint": "Security: Remove subset."
-      },
-      "HTM-004": {
-        "description": "Non-standard DOCTYPE",
-        "hint": "Logic: Replace DOCTYPE."
-      },
-      "HTM-005": {
-        "description": "External references found",
-        "hint": "Logic: Unwrap <a> tag. Append `<span>([AUTO-FIX] Link Removed)</span>`."
-      },
-      "HTM-006": {
-        "description": "Named entity found",
-        "hint": "Logic: Decode entities."
-      },
-      "HTM-007": {
-        "description": "ssml:ph empty value",
-        "hint": "Logic: Remove attribute."
-      },
-      "HTM-008": {
-        "description": "Missing src attribute",
-        "hint": "Logic: Replace <img> with `<span style='border:1px solid red; color:red;'>[AUTO-FIX] Image Source Missing</span>`."
-      },
-      "HTM-009": {
-        "description": "Legacy DOCTYPE",
-        "hint": "Logic: Replace DOCTYPE."
-      },
-      "HTM-010": {
-        "description": "Namespace URI found",
-        "hint": "Logic: Force standard namespace."
-      },
-      "HTM-011": {
-        "description": "Undeclared entity",
-        "hint": "Logic: Replace with `[AUTO-FIX] Unknown Entity`."
-      },
-      "HTM-012": {
-        "description": "External CFI link",
-        "hint": "Logic: Strip fragment."
-      },
-      "HTM-013": {
-        "description": "Internal CFI found",
-        "hint": "Logic: Strip fragment."
-      },
-      "HTM-014": {
-        "description": "Incorrect extension",
-        "hint": "Logic: Rename to .xhtml. Update refs."
-      },
-      "HTM-014a": {
-        "description": "XHTML extension required",
-        "hint": "Logic: Rename to .xhtml. Update refs."
-      },
-      "HTM-017": {
-        "description": "Language value mismatch",
-        "hint": "Logic: Sync lang."
-      },
-      "HTM-018": {
-        "description": "Invalid xml:lang",
-        "hint": "Logic: Set `xml:lang='en'`."
-      },
-      "HTM-019": {
-        "description": "Invalid lang",
-        "hint": "Logic: Set `lang='en'`."
-      },
-      "HTM-020": {
-        "description": "Missing xml:lang",
-        "hint": "Logic: Add `xml:lang='en'`."
-      },
-      "HTM-021": {
-        "description": "Missing lang",
-        "hint": "Logic: Add `lang='en'`."
-      },
-      "HTM-022": {
-        "description": "Excessive div/span",
-        "hint": "Optimization: Unwrap."
-      },
-      "HTM-025": {
-        "description": "Unregistered URI scheme",
-        "hint": "Logic: Remove href. Append `([AUTO-FIX] Link Disabled)`."
-      },
-      "HTM-027": {
-        "description": "Not enough list items",
-        "hint": "Logic: Inject `<li>[AUTO-FIX] Empty List Item</li>`."
-      },
-      "HTM-028": {
-        "description": "Missing input id",
-        "hint": "Logic: Generate ID."
-      },
-      "HTM-029": {
-        "description": "Missing label for",
-        "hint": "Logic: Link label to ID."
-      },
-      "HTM-033": {
-        "description": "Missing title",
-        "hint": "Logic: Inject `<title>[AUTO-FIX] Untitled</title>`."
-      },
-      "HTM-044": {
-        "description": "Unused namespace",
-        "hint": "Logic: Remove."
-      },
-      "HTM-045": {
-        "description": "Empty href",
-        "hint": "Logic: Set `href='#' title='[AUTO-FIX] Empty Link'`."
-      },
-      "HTM-046": {
-        "description": "Missing viewport",
-        "hint": "Logic: Inject viewport meta."
-      },
-      "HTM-047": {
-        "description": "Viewport dimensions missing",
-        "hint": "Logic: Update meta."
-      },
-      "HTM-048": {
-        "description": "Missing SVG viewBox",
-        "hint": "Logic: Set `viewBox='0 0 100 100'`."
-      },
-      "HTM_049": {
-        "description": "Missing xmlns",
-        "hint": "Logic: Add xmlns."
-      },
-      "HTM-050": {
-        "description": "pagebreak attribute found",
-        "hint": "Logic: Remove attribute."
-      },
-      "HTM-051": {
-        "description": "RDFa recommended",
-        "hint": "Logic: Strip Microdata."
-      },
-      "HTM-052": {
-        "description": "Region-based attribute error",
-        "hint": "Logic: Remove attribute."
-      },
-      "HTM-053": {
-        "description": "file:// links found",
-        "hint": "Logic: Remove href. Append `([AUTO-FIX] Local Link Removed)`."
-      },
-      "INF-001": {
-        "description": "Informational message",
-        "hint": "Valid."
-      },
-      "MED-001": {
-        "description": "Video poster type error",
-        "hint": "Logic: Remove poster."
-      },
-      "MED-002": {
-        "description": "Fallback not provided",
-        "hint": "Logic: Inject `<span>[AUTO-FIX] Media Not Supported</span>`."
-      },
-      "MED-003": {
-        "description": "Image fallback required",
-        "hint": "Logic: Generate a text-only HTML file named `fallback.xhtml` with text `[AUTO-FIX] Image Fallback`. Link it."
-      },
-      "MED-004": {
-        "description": "Image header corrupted",
-        "hint": "Logic: Delete file. Replace references with `<span style='color:red;'>[AUTO-FIX] Corrupted Image Removed (filename)</span>`."
-      },
-      "MED-005": {
-        "description": "Non-standard audio type",
-        "hint": "Logic: Remove tag. Keep fallback text if exists."
-      },
-      "MED-006": {
-        "description": "SVG filename reference caution",
-        "hint": "Logic: If missing, remove <image>. Insert text `[AUTO-FIX] Missing SVG Image`."
-      },
-      "MED-007": {
-        "description": "External resource reference error",
-        "hint": "Logic: Add type."
-      },
-      "NAV-001": {
-        "description": "EPUB2 nav not supported",
-        "hint": "Logic: Generate NCX."
-      },
-      "NAV-002": {
-        "description": "page-list found",
-        "hint": "Valid."
-      },
-      "NAV-003": {
-        "description": "Missing page list",
-        "hint": "Logic: Generate hidden nav with text `[AUTO-FIX] Page List`."
-      },
-      "NAV-004": {
-        "description": "Full title hierarchy required",
-        "hint": "Logic: Flatten list."
-      },
-      "NAV-005": {
-        "description": "Missing list of audio",
-        "hint": "Logic: Generate hidden nav."
-      },
-      "NAV-006": {
-        "description": "Missing list of illustrations",
-        "hint": "Logic: Generate hidden nav."
-      },
-      "NAV-007": {
-        "description": "Missing list of tables",
-        "hint": "Logic: Generate hidden nav."
-      },
-      "NAV-008": {
-        "description": "Missing list of videos",
-        "hint": "Logic: Generate hidden nav."
-      },
-      "NAV-009": {
-        "description": "Link target error",
-        "hint": "Logic: Unwrap <a>. Append `([AUTO-FIX] Invalid Link)`."
-      },
-      "NAV-010": {
-        "description": "Remote resource links prohibited",
-        "hint": "Logic: Unwrap <a>. Append `([AUTO-FIX] Remote Link Removed)`."
-      },
-      "NAV-011": {
-        "description": "Ordering error",
-        "hint": "Logic: Reorder."
-      },
-      "NCX-001": {
-        "description": "NCX ID mismatch",
-        "hint": "Logic: Sync ID."
-      },
-      "NCX-002": {
-        "description": "Missing toc attribute",
-        "hint": "Logic: Add toc='ncx'."
-      },
-      "NCX-003": {
-        "description": "NCX file required",
-        "hint": "Logic: Generate NCX."
-      },
-      "NCX-004": {
-        "description": "NCX ID contains whitespace",
-        "hint": "Logic: Strip spaces."
-      },
-      "NCX-005": {
-        "description": "page-list found",
-        "hint": "Valid."
-      },
-      "NCX-006": {
-        "description": "Empty text label",
-        "hint": "Logic: Set text to `[AUTO-FIX] Chapter`."
-      },
-      "OPF-001": {
-        "description": "Version parse error",
-        "hint": "Logic: Force version 3.0."
-      },
-      "OPF-002": {
-        "description": "OPF file missing",
-        "hint": "Critical: Regenerate container.xml."
-      },
-      "OPF-003": {
-        "description": "Manifest missing",
-        "hint": "Auto-Register: Add to manifest."
-      },
-      "OPF-004": {
-        "description": "Prefix whitespace",
-        "hint": "Logic: Trim."
-      },
-      "OPF-004a": {
-        "description": "Empty prefix",
-        "hint": "Logic: Remove."
-      },
-      "OPF-004b": {
-        "description": "Invalid prefix name",
-        "hint": "Logic: Normalize."
-      },
-      "OPF-004c": {
-        "description": "Missing prefix colon",
-        "hint": "Logic: Add colon."
-      },
-      "OPF-004d": {
-        "description": "Prefix separation error",
-        "hint": "Logic: Fix spacing."
-      },
-      "OPF-004e": {
-        "description": "Prefix whitespace error",
-        "hint": "Logic: Trim."
-      },
-      "OPF-004f": {
-        "description": "Spacing between mappings error",
-        "hint": "Logic: Normalize."
-      },
-      "OPF-005": {
-        "description": "Prefix URI missing",
-        "hint": "Logic: Remove."
-      },
-      "OPF-006": {
-        "description": "Invalid URI",
-        "hint": "Logic: Encode."
-      },
-      "OPF-007": {
-        "description": "Prefix redeclaration",
-        "hint": "Logic: Deduplicate."
-      },
-      "OPF-007a": {
-        "description": "Underscore prefix prohibited",
-        "hint": "Logic: Prepend 'x'."
-      },
-      "OPF-007b": {
-        "description": "Default vocabulary redeclaration",
-        "hint": "Logic: Remove."
-      },
-      "OPF-008": {
-        "description": "Core media handler prohibited",
-        "hint": "Logic: Remove bindings."
-      },
-      "OPF-009": {
-        "description": "Duplicate handler",
-        "hint": "Logic: Remove."
-      },
-      "OPF-010": {
-        "description": "Reference resolution error",
-        "hint": "Logic: Fix path."
-      },
-      "OPF-011": {
-        "description": "Both page-spread values used",
-        "hint": "Logic: Keep 'right'."
-      },
-      "OPF-012": {
-        "description": "Required metadata missing",
-        "hint": "Logic: Inject: Title='[AUTO-FIX] Untitled', Lang='en', ID='UUID'."
-      },
-      "OPF-013": {
-        "description": "Type mismatch",
-        "hint": "Logic: Update OPF type."
-      },
-      "OPF-014": {
-        "description": "Attribute declaration required",
-        "hint": "Logic: Add default."
-      },
-      "OPF-015": {
-        "description": "Attribute declaration prohibited",
-        "hint": "Logic: Remove."
-      },
-      "OPF-016": {
-        "description": "full-path missing",
-        "hint": "Logic: Fix container.xml."
-      },
-      "OPF-017": {
-        "description": "full-path empty",
-        "hint": "Logic: Fix container.xml."
-      },
-      "OPF-018": {
-        "description": "Remote resources unused",
-        "hint": "Logic: Remove attribute."
-      },
-      "OPF-018b": {
-        "description": "Remote resources check",
-        "hint": "Logic: Remove remote href."
-      },
-      "OPF-019": {
-        "description": "Spine missing",
-        "hint": "Logic: Generate spine."
-      },
-      "OPF-021": {
-        "description": "Unregistered URI scheme",
-        "hint": "Logic: Remove."
-      },
-      "OPF-025": {
-        "description": "Value list prohibited",
-        "hint": "Logic: Split."
-      },
-      "OPF-026": {
-        "description": "Invalid attribute value",
-        "hint": "Logic: Reset."
-      },
-      "OPF-027": {
-        "description": "Undefined attribute",
-        "hint": "Logic: Remove."
-      },
-      "OPF-028": {
-        "description": "Undeclared prefix",
-        "hint": "Logic: Add."
-      },
-      "OPF-029": {
-        "description": "Media type mismatch",
-        "hint": "Logic: Update OPF."
-      },
-      "OPF-030": {
-        "description": "unique-identifier missing",
-        "hint": "Logic: Generate UUID."
-      },
-      "OPF-031": {
-        "description": "Guide reference missing",
-        "hint": "Logic: Add to manifest."
-      },
-      "OPF-032": {
-        "description": "Invalid guide reference",
-        "hint": "Logic: Remove."
-      },
-      "OPF-033": {
-        "description": "No linear resources",
-        "hint": "Logic: Set `linear='yes'`."
-      },
-      "OPF-034": {
-        "description": "Duplicate references",
-        "hint": "Logic: Deduplicate."
-      },
-      "OPF-035": {
-        "description": "text/html inappropriate",
-        "hint": "Logic: Set type `application/xhtml+xml`."
-      },
-      "OPF-036": {
-        "description": "Video support caution",
-        "hint": "Valid."
-      },
-      "OPF-037": {
-        "description": "Unused media type",
-        "hint": "Cleanup: Delete file."
-      },
-      "OPF-038": {
-        "description": "OEBPS 1.2 type error",
-        "hint": "Logic: Update type."
-      },
-      "OPF-039": {
-        "description": "OEBPS 1.2 CSS error",
-        "hint": "Logic: Update type."
-      },
-      "OPF-040": {
-        "description": "Fallback item missing",
-        "hint": "Logic: Remove item."
-      },
-      "OPF-041": {
-        "description": "Fallback stylesheet missing",
-        "hint": "Logic: Remove ref."
-      },
-      "OPF-042": {
-        "description": "Disallowed spine types",
-        "hint": "Logic: Remove from spine."
-      },
-      "OPF-043": {
-        "description": "Non-standard type fallback missing",
-        "hint": "Logic: Add fallback to dummy txt."
-      },
-      "OPF-044": {
-        "description": "Non-standard fallback chain",
-        "hint": "Logic: Break chain."
-      },
-      "OPF-045": {
-        "description": "Fallback cycle",
-        "hint": "Logic: Remove fallback."
-      },
-      "OPF-046": {
-        "description": "Script property missing",
-        "hint": "Logic: Add property."
-      },
-      "OPF-047": {
-        "description": "OEBPS 1.2 syntax",
-        "hint": "Logic: Remove guide."
-      },
-      "OPF-048": {
-        "description": "unique-identifier attribute missing",
-        "hint": "Logic: Add attribute."
-      },
-      "OPF-049": {
-        "description": "ID missing",
-        "hint": "Logic: Generate ID."
-      },
-      "OPF-050": {
-        "description": "TOC type error",
-        "hint": "Logic: Fix type."
-      },
-      "OPF-052": {
-        "description": "Role value error",
-        "hint": "Logic: Set to `aut`."
-      },
-      "OPF-053": {
-        "description": "Date syntax warning",
-        "hint": "Logic: Format YYYY-MM-DD."
-      },
-      "OPF-054": {
-        "description": "Date validity error",
-        "hint": "Logic: Set to Today."
-      },
-      "OPF-055": {
-        "description": "Empty tag",
-        "hint": "Logic: Remove."
-      },
-      "OPF-056": {
-        "description": "Non-standard audio",
-        "hint": "Logic: Remove."
-      },
-      "OPF-058": {
-        "description": "Nav TOC not referenced",
-        "hint": "Logic: Add property."
-      },
-      "OPF-059": {
-        "description": "NCX TOC not referenced",
-        "hint": "Logic: Add to manifest."
-      },
-      "OPF-060": {
-        "description": "Duplicate items",
-        "hint": "Logic: Delete duplicates."
-      },
-      "OPF-061": {
-        "description": "Duplicate items (normalized)",
-        "hint": "Logic: Rename."
-      },
-      "OPF-062": {
-        "description": "Adobe page-map",
-        "hint": "Logic: Delete."
-      },
-      "OPF-063": {
-        "description": "page-map not found",
-        "hint": "Logic: Delete ref."
-      },
-      "OPF-064": {
-        "description": "Validation profile info",
-        "hint": "Valid."
-      },
-      "OPF-065": {
-        "description": "Metadata cycle",
-        "hint": "Logic: Remove refines."
-      },
-      "OPF-066": {
-        "description": "Pagination source missing",
-        "hint": "Logic: Add dummy `<dc:source>[AUTO-FIX] Source</dc:source>`."
-      },
-      "OPF-067": {
-        "description": "Resource listed twice",
-        "hint": "Logic: Deduplicate."
-      },
-      "OPF-068": {
-        "description": "Unknown collection role",
-        "hint": "Logic: Set `distributor`."
-      },
-      "OPF-069": {
-        "description": "idpf.org role prohibited",
-        "hint": "Logic: Remove."
-      },
-      "OPF_070": {
-        "description": "Invalid role URI",
-        "hint": "Logic: Fix URI."
-      },
-      "OPF-071": {
-        "description": "Index collection error",
-        "hint": "Logic: Delete."
-      },
-      "OPF-072": {
-        "description": "Empty metadata",
-        "hint": "Logic: Remove."
-      },
-      "OPF-073": {
-        "description": "External identifier prohibited",
-        "hint": "Logic: Remove."
-      },
-      "OPF-074": {
-        "description": "Duplicate declaration",
-        "hint": "Logic: Delete."
-      },
-      "OPF-075": {
-        "description": "Preview collection error",
-        "hint": "Logic: Delete."
-      },
-      "OPF-076": {
-        "description": "Fragment identifier prohibited",
-        "hint": "Logic: Remove fragment."
-      },
-      "OPF-077": {
-        "description": "Data navigation spine prohibited",
-        "hint": "Logic: Remove."
-      },
-      "OPF-078": {
-        "description": "Missing preface content",
-        "hint": "Valid."
-      },
-      "OPF-079": {
-        "description": "Dictionary type declaration required",
-        "hint": "Logic: Add type."
-      },
-      "OPF-080": {
-        "description": "Search key map extension",
-        "hint": "Logic: Rename."
-      },
-      "OPF-081": {
-        "description": "Dictionary resource missing",
-        "hint": "Logic: Delete."
-      },
-      "OPF-082": {
-        "description": "Multiple search key maps",
-        "hint": "Logic: Keep first."
-      },
-      "OPF-083": {
-        "description": "Search key map missing",
-        "hint": "Logic: Delete dict."
-      },
-      "OPF-084": {
-        "description": "Invalid dictionary resource",
-        "hint": "Logic: Fix type."
-      },
-      "OPF-085": {
-        "description": "Invalid UUID",
-        "hint": "Logic: Regenerate."
-      },
-      "OPF-086": {
-        "description": "Deprecated attribute usage",
-        "hint": "Logic: Remove."
-      },
-      "OPF-086b": {
-        "description": "epub:type deprecated",
-        "hint": "Logic: Remove."
-      },
-      "OPF-087": {
-        "description": "Disallowed epub:type",
-        "hint": "Logic: Remove."
-      },
-      "OPF-088": {
-        "description": "Unrecognized epub:type",
-        "hint": "Logic: Remove."
-      },
-      "OPF-089": {
-        "description": "Alternate keyword error",
-        "hint": "Logic: Remove keyword."
-      },
-      "OPF-090": {
-        "description": "Recommended MIME type",
-        "hint": "Logic: Fix type."
-      },
-      "OPF-097": {
-        "description": "Unused resource (orphan file)",
-        "hint": "Cleanup: Delete file."
-      },
-      "PKG-001": {
-        "description": "Version mismatch",
-        "hint": "Logic: Force version 3.0."
-      },
-      "PKG-003": {
-        "description": "Header read error",
-        "hint": "Critical: Delete file. Replace refs with text: `[AUTO-FIX] File Read Error (filename)`."
-      },
-      "PKG-004": {
-        "description": "ZIP header corrupted",
-        "hint": "System: Repackage."
-      },
-      "PKG-005": {
-        "description": "mimetype extra fields",
-        "hint": "System: Repackage."
-      },
-      "PKG_006": {
-        "description": "mimetype missing/placement error",
-        "hint": "System: Repackage."
-      },
-      "PKG_007": {
-        "description": "mimetype content error",
-        "hint": "System: Overwrite."
-      },
-      "PKG_008": {
-        "description": "File not readable",
-        "hint": "Logic: Replace refs with `[AUTO-FIX] Unreadable File`."
-      },
-      "PKG_009": {
-        "description": "Filename character error",
-        "hint": "Logic: Rename. Update refs."
-      },
-      "PKG_010": {
-        "description": "Filename contains spaces",
-        "hint": "Logic: Replace with `_`. Update refs."
-      },
-      "PKG_011": {
-        "description": "Filename trailing dot",
-        "hint": "Logic: Remove dot. Update refs."
-      },
-      "PKG_012": {
-        "description": "Non-ASCII filename",
-        "hint": "Logic: Rename. Update refs."
-      },
-      "PKG_013": {
-        "description": "Multiple renditions",
-        "hint": "Logic: Force single."
-      },
-      "PKG_014": {
-        "description": "Empty directory",
-        "hint": "Logic: Delete."
-      },
-      "PKG_015": {
-        "description": "Content read error",
-        "hint": "Logic: Replace refs with `[AUTO-FIX] Content Error`."
-      },
-      "PKG-016": {
-        "description": "Lowercase extension recommended",
-        "hint": "Logic: Lowercase."
-      },
-      "PKG-017": {
-        "description": "Unusual extension",
-        "hint": "Logic: Append extension."
-      },
-      "PKG-018": {
-        "description": "EPUB file missing",
-        "hint": "Critical: Stop."
-      },
-      "PKG-020": {
-        "description": "OPF file missing",
-        "hint": "Critical: Link OPF."
-      },
-      "PKG-021": {
-        "description": "Corrupted image",
-        "hint": "Logic: Delete file. Replace refs with `<span class='error'>[AUTO-FIX] Corrupted Image Removed (filename)</span>`."
-      },
-      "PKG-022": {
-        "description": "Extension mismatch",
-        "hint": "Logic: Rename."
-      },
-      "PKG-023": {
-        "description": "EPUB 2 validation",
-        "hint": "Valid."
-      },
-      "PKG-024": {
-        "description": "Unusual extension info",
-        "hint": "Valid."
-      },
-      "RSC-001": {
-        "description": "File not found",
-        "hint": "Cascade Clean: Remove referencing tag."
-      },
-      "RSC-002": {
-        "description": "container.xml missing",
-        "hint": "Logic: Create."
-      },
-      "RSC-003": {
-        "description": "rootfile missing",
-        "hint": "Logic: Add."
-      },
-      "RSC-004": {
-        "description": "Encrypted file",
-        "hint": "Logic: Delete encryption.xml."
-      },
-      "RSC-005": {
-        "description": "Parsing error",
-        "hint": "Critical: Replace file content with `[AUTO-FIX] Parsing Error Placeholder`."
-      },
-      "RSC-006": {
-        "description": "Remote resource",
-        "hint": "Logic: Remove link."
-      },
-      "RSC-006b": {
-        "description": "External resource",
-        "hint": "Logic: Remove link."
-      },
-      "RSC-007": {
-        "description": "Referenced resource not found",
-        "hint": "Cascade Clean: Replace tag with `<span>[AUTO-FIX] Missing Resource</span>`."
-      },
-      "RSC-007w": {
-        "description": "Referenced resource not found (warning)",
-        "hint": "Cascade Clean: Replace tag with `<span>[AUTO-FIX] Missing Resource</span>`."
-      },
-      "RSC-008": {
-        "description": "Manifest not declared",
-        "hint": "Auto-Register: Add to manifest."
-      },
-      "RSC-009": {
-        "description": "Fragment identifier error",
-        "hint": "Logic: Remove `#fragment`."
-      },
-      "RSC-010": {
-        "description": "Non-standard resource",
-        "hint": "Logic: Delete resource."
-      },
-      "RSC-011": {
-        "description": "Non-spine reference",
-        "hint": "Logic: Add to spine."
-      },
-      "RSC-012": {
-        "description": "Undefined fragment",
-        "hint": "Logic: Remove `#fragment`."
-      },
-      "RSC-013": {
-        "description": "Stylesheet fragment",
-        "hint": "Logic: Remove `#fragment`."
-      },
-      "RSC-014": {
-        "description": "Incompatible fragment",
-        "hint": "Logic: Remove `#fragment`."
-      },
-      "RSC-015": {
-        "description": "use tag fragment",
-        "hint": "Logic: Delete tag."
-      },
-      "RSC-016": {
-        "description": "Fatal parsing error",
-        "hint": "Critical: Replace file content with `[AUTO-FIX] Fatal Error`."
-      },
-      "RSC-017": {
-        "description": "Parsing warning",
-        "hint": "Logic: Re-serialize."
-      },
-      "RSC-018": {
-        "description": "Alternate image not found",
-        "hint": "Logic: Remove ref."
-      },
-      "RSC-019": {
-        "description": "metadata.xml missing",
-        "hint": "Logic: Generate."
-      },
-      "RSC-020": {
-        "description": "Invalid URI",
-        "hint": "Logic: Encode."
-      },
-      "RSC-021": {
-        "description": "Search key map error",
-        "hint": "Logic: Delete."
-      },
-      "RSC-022": {
-        "description": "Image cannot be verified",
-        "hint": "Valid."
-      },
-      "RSC-023": {
-        "description": "URL host parsing error",
-        "hint": "Logic: Remove link."
-      },
-      "SCP-001": {
-        "description": "eval() usage prohibited",
-        "hint": "Security: Delete script. Comment: `/* [AUTO-FIX] Removed eval */`."
-      },
-      "SCP-002": {
-        "description": "XMLHttpRequest prohibited",
-        "hint": "Security: Delete script. Comment: `/* [AUTO-FIX] Removed XHR */`."
-      },
-      "SCP-003": {
-        "description": "Local storage unsupported",
-        "hint": "Security: Delete script."
-      },
-      "SCP-004": {
-        "description": "EPUB 2 scripts prohibited",
-        "hint": "Logic: Delete script."
-      },
-      "SCP-006": {
-        "description": "Inline scripts found",
-        "hint": "Logic: Delete. Comment: ``."
-      },
-      "SCP-007": {
-        "description": "innerHtml usage",
-        "hint": "Logic: Comment out."
-      },
-      "SCP-008": {
-        "description": "innerText usage",
-        "hint": "Logic: Comment out."
-      },
-      "SCP-009": {
-        "description": "Mouse events",
-        "hint": "Logic: Add `ontouchstart`."
-      },
-      "SCP_010": {
-        "description": "Script included",
-        "hint": "Logic: Add property."
-      }
+    "ACC-009": {
+      "description": "Missing MathML alttext",
+      "hint": "Logic: Add alttext='[AUTO-FIX] Formula'."
+    },
+    "ACC-011": {
+      "description": "Missing title for SVG hyperlink",
+      "hint": "Logic: Insert <title>[AUTO-FIX] Link</title> into SVG <a>."
+    },
+    "ACC-013": {
+      "description": "Inline styles found",
+      "hint": "Logic: Extract to CSS class `.autofix-style`. Comment in CSS: `/* [AUTO-FIX] Extracted inline style */`."
+    },
+    "ACC-014": {
+      "description": "Absolute units for font-size",
+      "hint": "Logic: Convert px to em. Add HTML comment nearby: ``."
+    },
+    "ACC-015": {
+      "description": "Absolute units for line-height",
+      "hint": "Logic: Strip unit. Add HTML comment: ``."
+    },
+    "ACC-016": {
+      "description": "font-size must be relative",
+      "hint": "Logic: Convert to rem. Add comment: ``."
+    },
+    "ACC-017": {
+      "description": "line-height must be relative",
+      "hint": "Logic: Remove unit."
+    },
+    "CHK-001": {
+      "description": "Missing message file",
+      "hint": "System: Re-install EPUBCheck."
+    },
+    "CHK-002": {
+      "description": "Unrecognized message ID",
+      "hint": "System: Update EPUBCheck."
+    },
+    "CHK-003": {
+      "description": "Unrecognized severity",
+      "hint": "System: Check config."
+    },
+    "CHK-004": {
+      "description": "Parameter overflow",
+      "hint": "System: Check config."
+    },
+    "CHK-005": {
+      "description": "Suggestion parameter overflow",
+      "hint": "System: Check config."
+    },
+    "CHK-006": {
+      "description": "Parameter parse failure",
+      "hint": "System: Check config."
+    },
+    "CHK-007": {
+      "description": "Message file processing error",
+      "hint": "System: Check config."
+    },
+    "CHK-008": {
+      "description": "Item processing error",
+      "hint": "Critical: File corrupted. Replace file content with text: '[AUTO-FIX] Fatal File Error - Replaced to prevent crash'."
+    },
+    "CSS-001": {
+      "description": "Contains forbidden properties",
+      "hint": "Logic: Delete property. Add comment: `/* [AUTO-FIX] Removed forbidden property */`."
+    },
+    "CSS-002": {
+      "description": "Empty/NULL reference",
+      "hint": "Logic: Delete line. Add comment: `/* [AUTO-FIX] Removed empty url */`."
+    },
+    "CSS-003": {
+      "description": "Encoding error",
+      "hint": "Logic: Force UTF-8. Prepend `@charset 'UTF-8'; /* [AUTO-FIX] Encoding forced */`."
+    },
+    "CSS-004": {
+      "description": "BOM detected",
+      "hint": "Logic: Save as UTF-8 (No BOM)."
+    },
+    "CSS-005": {
+      "description": "Conflicting fallback styles",
+      "hint": "Logic: Remove duplicate. Add comment: `/* [AUTO-FIX] Removed conflict */`."
+    },
+    "CSS-006": {
+      "description": "Use of fixed positioning",
+      "hint": "Logic: Change to `absolute`. Add comment: `/* [AUTO-FIX] Fixed changed to absolute */`."
+    },
+    "CSS-007": {
+      "description": "Non-standard font reference",
+      "hint": "Logic: Comment out block: `/* [AUTO-FIX] Disabled non-standard font */`."
+    },
+    "CSS-008": {
+      "description": "CSS parsing error",
+      "hint": "Logic: Comment out error block: `/* [AUTO-FIX] CSS Parsing Error Disabled */`."
+    },
+    "CSS-009": {
+      "description": "Potential pagination issues",
+      "hint": "Logic: Remove properties. Add comment: `/* [AUTO-FIX] Removed pagination props */`."
+    },
+    "CSS-010": {
+      "description": "Stylesheet type error",
+      "hint": "Logic: Force `type='text/css'`."
+    },
+    "CSS-012": {
+      "description": "Multiple CSS links",
+      "hint": "Valid: Ignore."
+    },
+    "CSS-013": {
+      "description": "Use of !important",
+      "hint": "Logic: Remove `!important`."
+    },
+    "CSS-015": {
+      "description": "Alternate stylesheet title missing",
+      "hint": "Logic: Add `title='[AUTO-FIX] Alternate'`."
+    },
+    "CSS-017": {
+      "description": "Use of absolute positioning",
+      "hint": "Logic: Warn only. If critical, comment out property with `/* [AUTO-FIX] Disabled absolute pos */`."
+    },
+    "CSS-019": {
+      "description": "Empty @font-face",
+      "hint": "Logic: Delete block."
+    },
+    "CSS-020": {
+      "description": "Invalid font-size value",
+      "hint": "Logic: Set to `1em`. Comment: `/* [AUTO-FIX] Invalid size reset */`."
+    },
+    "CSS-021": {
+      "description": "Invalid system font",
+      "hint": "Logic: Append `, sans-serif`. Comment: `/* [AUTO-FIX] Added generic font */`."
+    },
+    "CSS-022": {
+      "description": "Global margin settings",
+      "hint": "Logic: Change `*` to `body`."
+    },
+    "CSS-023": {
+      "description": "Use of media queries",
+      "hint": "Logic: Remove non-standard block. Comment: `/* [AUTO-FIX] Removed non-standard media */`."
+    },
+    "CSS-024": {
+      "description": "Unused classes",
+      "hint": "Valid: Ignore."
+    },
+    "CSS-025": {
+      "description": "Missing class selectors",
+      "hint": "Logic: Create `.classname { /* [AUTO-FIX] Empty rule */ }`."
+    },
+    "CSS-028": {
+      "description": "Font-face usage warning",
+      "hint": "Logic: If dangerous, delete block. Comment: `/* [AUTO-FIX] Removed unsafe font url */`."
+    },
+    "HTM-001": {
+      "description": "Invalid XML",
+      "hint": "Logic: Fix tags. Add comment at top: ``."
+    },
+    "HTM-002": {
+      "description": "Cannot determine XML version",
+      "hint": "Logic: Prepend XML declaration."
+    },
+    "HTM-003": {
+      "description": "External entity usage",
+      "hint": "Security: Remove subset."
+    },
+    "HTM-004": {
+      "description": "Non-standard DOCTYPE",
+      "hint": "Logic: The DOCTYPE must be exactly \"<!DOCTYPE html>\". Fix this way:\n1. Find the line starting with \"<!DOCTYPE\" (usually line 2 or 3)\n2. DELETE the entire DOCTYPE line completely\n3. ADD exactly this line in its place: <!DOCTYPE html>\n4. Example BEFORE: <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n5. Example AFTER: <!DOCTYPE html>\n6. Make sure no extra spaces or attributes\n7. Add comment after: <!--[AUTO-FIX] DOCTYPE Fixed-->"
+    },
+    "HTM-005": {
+      "description": "External references found",
+      "hint": "Logic: Unwrap <a> tag. Append `<span>([AUTO-FIX] Link Removed)</span>`."
+    },
+    "HTM-006": {
+      "description": "Named entity found",
+      "hint": "Logic: Decode entities."
+    },
+    "HTM-007": {
+      "description": "ssml:ph empty value",
+      "hint": "Logic: Remove attribute."
+    },
+    "HTM-008": {
+      "description": "Missing src attribute",
+      "hint": "Logic: Replace <img> with `<span style='border:1px solid red; color:red;'>[AUTO-FIX] Image Source Missing</span>`."
+    },
+    "HTM-009": {
+      "description": "Legacy DOCTYPE",
+      "hint": "Logic: Replace DOCTYPE."
+    },
+    "HTM-010": {
+      "description": "Namespace URI found",
+      "hint": "Logic: Force standard namespace."
+    },
+    "HTM-011": {
+      "description": "Undeclared entity",
+      "hint": "Logic: Replace with `[AUTO-FIX] Unknown Entity`."
+    },
+    "HTM-012": {
+      "description": "External CFI link",
+      "hint": "Logic: Strip fragment."
+    },
+    "HTM-013": {
+      "description": "Internal CFI found",
+      "hint": "Logic: Strip fragment."
+    },
+    "HTM-014": {
+      "description": "Incorrect extension",
+      "hint": "Logic: Rename to .xhtml. Update refs."
+    },
+    "HTM-014a": {
+      "description": "XHTML extension required",
+      "hint": "Logic: Rename to .xhtml. Update refs."
+    },
+    "HTM-017": {
+      "description": "Language value mismatch",
+      "hint": "Logic: Sync lang."
+    },
+    "HTM-018": {
+      "description": "Invalid xml:lang",
+      "hint": "Logic: Set `xml:lang='en'`."
+    },
+    "HTM-019": {
+      "description": "Invalid lang",
+      "hint": "Logic: Set `lang='en'`."
+    },
+    "HTM-020": {
+      "description": "Missing xml:lang",
+      "hint": "Logic: Add `xml:lang='en'`."
+    },
+    "HTM-021": {
+      "description": "Missing lang",
+      "hint": "Logic: Add `lang='en'`."
+    },
+    "HTM-022": {
+      "description": "Excessive div/span",
+      "hint": "Optimization: Unwrap."
+    },
+    "HTM-025": {
+      "description": "Unregistered URI scheme",
+      "hint": "Logic: Remove href. Append `([AUTO-FIX] Link Disabled)`."
+    },
+    "HTM-027": {
+      "description": "Not enough list items",
+      "hint": "Logic: Inject `<li>[AUTO-FIX] Empty List Item</li>`."
+    },
+    "HTM-028": {
+      "description": "Missing input id",
+      "hint": "Logic: Generate ID."
+    },
+    "HTM-029": {
+      "description": "Missing label for",
+      "hint": "Logic: Link label to ID."
+    },
+    "HTM-033": {
+      "description": "Missing title",
+      "hint": "Logic: Inject `<title>[AUTO-FIX] Untitled</title>`."
+    },
+    "HTM-044": {
+      "description": "Unused namespace",
+      "hint": "Logic: Remove."
+    },
+    "HTM-045": {
+      "description": "Empty href",
+      "hint": "Logic: Set `href='#'` and add `title='[AUTO-FIX] Empty Link'`."
+    },
+    "HTM-046": {
+      "description": "Missing viewport",
+      "hint": "Logic: Inject viewport meta."
+    },
+    "HTM-047": {
+      "description": "Viewport dimensions missing",
+      "hint": "Logic: Update meta."
+    },
+    "HTM-048": {
+      "description": "Missing SVG viewBox",
+      "hint": "Logic: Set `viewBox='0 0 100 100'`."
+    },
+    "HTM_049": {
+      "description": "Missing xmlns",
+      "hint": "Logic: Add xmlns."
+    },
+    "HTM-050": {
+      "description": "pagebreak attribute found",
+      "hint": "Logic: Remove attribute."
+    },
+    "HTM-051": {
+      "description": "RDFa recommended",
+      "hint": "Logic: Strip Microdata."
+    },
+    "HTM-052": {
+      "description": "Region-based attribute error",
+      "hint": "Logic: Remove attribute."
+    },
+    "HTM-053": {
+      "description": "file:// links found",
+      "hint": "Logic: Remove href. Append `([AUTO-FIX] Local Link Removed)`."
+    },
+    "INF-001": {
+      "description": "Informational message",
+      "hint": "Valid."
+    },
+    "MED-001": {
+      "description": "Video poster type error",
+      "hint": "Logic: Remove poster."
+    },
+    "MED-002": {
+      "description": "Fallback not provided",
+      "hint": "Logic: Inject `<span>[AUTO-FIX] Media Not Supported</span>`."
+    },
+    "MED-003": {
+      "description": "Image fallback required",
+      "hint": "Logic: Generate a text-only HTML file named `fallback.xhtml` with text `[AUTO-FIX] Image Fallback`. Link it."
+    },
+    "MED-004": {
+      "description": "Image header corrupted",
+      "hint": "Logic: Delete file. Replace references with `<span style='color:red;'>[AUTO-FIX] Corrupted Image Removed (filename)</span>`."
+    },
+    "MED-005": {
+      "description": "Non-standard audio type",
+      "hint": "Logic: Remove tag. Keep fallback text if exists."
+    },
+    "MED-006": {
+      "description": "SVG filename reference caution",
+      "hint": "Logic: If missing, remove <image>. Insert text `[AUTO-FIX] Missing SVG Image`."
+    },
+    "MED-007": {
+      "description": "External resource reference error",
+      "hint": "Logic: Add type."
+    },
+    "NAV-001": {
+      "description": "EPUB2 nav not supported",
+      "hint": "Logic: Generate NCX."
+    },
+    "NAV-002": {
+      "description": "page-list found",
+      "hint": "Valid."
+    },
+    "NAV-003": {
+      "description": "Missing page list",
+      "hint": "Logic: Generate hidden nav with text `[AUTO-FIX] Page List`."
+    },
+    "NAV-004": {
+      "description": "Full title hierarchy required",
+      "hint": "Logic: Flatten list."
+    },
+    "NAV-005": {
+      "description": "Missing list of audio",
+      "hint": "Logic: Generate hidden nav."
+    },
+    "NAV-006": {
+      "description": "Missing list of illustrations",
+      "hint": "Logic: Generate hidden nav."
+    },
+    "NAV-007": {
+      "description": "Missing list of tables",
+      "hint": "Logic: Generate hidden nav."
+    },
+    "NAV-008": {
+      "description": "Missing list of videos",
+      "hint": "Logic: Generate hidden nav."
+    },
+    "NAV-009": {
+      "description": "Link target error",
+      "hint": "Logic: Unwrap <a>. Append `([AUTO-FIX] Invalid Link)`."
+    },
+    "NAV-010": {
+      "description": "Remote resource links prohibited",
+      "hint": "Logic: Unwrap <a>. Append `([AUTO-FIX] Remote Link Removed)`."
+    },
+    "NAV-011": {
+      "description": "Ordering error",
+      "hint": "Logic: Reorder."
+    },
+    "NCX-001": {
+      "description": "NCX ID mismatch",
+      "hint": "Logic: Sync ID."
+    },
+    "NCX-002": {
+      "description": "Missing toc attribute",
+      "hint": "Logic: Add toc='ncx'."
+    },
+    "NCX-003": {
+      "description": "NCX file required",
+      "hint": "Logic: Generate NCX."
+    },
+    "NCX-004": {
+      "description": "NCX ID contains whitespace",
+      "hint": "Logic: Strip spaces."
+    },
+    "NCX-005": {
+      "description": "page-list found",
+      "hint": "Valid."
+    },
+    "NCX-006": {
+      "description": "Empty text label",
+      "hint": "Logic: Set text to `[AUTO-FIX] Chapter`."
+    },
+    "OPF-001": {
+      "description": "Version parse error",
+      "hint": "Logic: Force version 3.0."
+    },
+    "OPF-002": {
+      "description": "OPF file missing",
+      "hint": "Critical: Regenerate container.xml."
+    },
+    "OPF-003": {
+      "description": "Manifest missing",
+      "hint": "Auto-Register: Add to manifest."
+    },
+    "OPF-004": {
+      "description": "Prefix whitespace",
+      "hint": "Logic: Trim."
+    },
+    "OPF-004a": {
+      "description": "Empty prefix",
+      "hint": "Logic: Remove."
+    },
+    "OPF-004b": {
+      "description": "Invalid prefix name",
+      "hint": "Logic: Normalize."
+    },
+    "OPF-004c": {
+      "description": "Missing prefix colon",
+      "hint": "Logic: Add colon."
+    },
+    "OPF-004d": {
+      "description": "Prefix separation error",
+      "hint": "Logic: Fix spacing."
+    },
+    "OPF-004e": {
+      "description": "Prefix whitespace error",
+      "hint": "Logic: Trim."
+    },
+    "OPF-004f": {
+      "description": "Spacing between mappings error",
+      "hint": "Logic: Normalize."
+    },
+    "OPF-005": {
+      "description": "Prefix URI missing",
+      "hint": "Logic: Remove."
+    },
+    "OPF-006": {
+      "description": "Invalid URI",
+      "hint": "Logic: Encode."
+    },
+    "OPF-007": {
+      "description": "Prefix redeclaration",
+      "hint": "Logic: Deduplicate."
+    },
+    "OPF-007a": {
+      "description": "Underscore prefix prohibited",
+      "hint": "Logic: Prepend 'x'."
+    },
+    "OPF-007b": {
+      "description": "Default vocabulary redeclaration",
+      "hint": "Logic: Remove."
+    },
+    "OPF-008": {
+      "description": "Core media handler prohibited",
+      "hint": "Logic: Remove bindings."
+    },
+    "OPF-009": {
+      "description": "Duplicate handler",
+      "hint": "Logic: Remove."
+    },
+    "OPF-010": {
+      "description": "Reference resolution error",
+      "hint": "Logic: Fix path."
+    },
+    "OPF-011": {
+      "description": "Both page-spread values used",
+      "hint": "Logic: Keep 'right'."
+    },
+    "OPF-012": {
+      "description": "Required metadata missing",
+      "hint": "Logic: Inject: Title='[AUTO-FIX] Untitled', Lang='en', ID='UUID'."
+    },
+    "OPF-013": {
+      "description": "Type mismatch",
+      "hint": "Logic: Update OPF type."
+    },
+    "OPF-014": {
+      "description": "Attribute declaration required",
+      "hint": "Logic: Add default."
+    },
+    "OPF-015": {
+      "description": "Attribute declaration prohibited",
+      "hint": "Logic: Remove."
+    },
+    "OPF-016": {
+      "description": "full-path missing",
+      "hint": "Logic: Fix container.xml."
+    },
+    "OPF-017": {
+      "description": "full-path empty",
+      "hint": "Logic: Fix container.xml."
+    },
+    "OPF-018": {
+      "description": "Remote resources unused",
+      "hint": "Logic: Remove attribute."
+    },
+    "OPF-018b": {
+      "description": "Remote resources check",
+      "hint": "Logic: Remove remote href."
+    },
+    "OPF-019": {
+      "description": "Spine missing",
+      "hint": "Logic: Generate spine."
+    },
+    "OPF-021": {
+      "description": "Unregistered URI scheme",
+      "hint": "Logic: Remove."
+    },
+    "OPF-025": {
+      "description": "Value list prohibited",
+      "hint": "Logic: Split."
+    },
+    "OPF-026": {
+      "description": "Invalid attribute value",
+      "hint": "Logic: Reset."
+    },
+    "OPF-027": {
+      "description": "Undefined attribute",
+      "hint": "Logic: Remove."
+    },
+    "OPF-028": {
+      "description": "Undeclared prefix",
+      "hint": "Logic: Add."
+    },
+    "OPF-029": {
+      "description": "Media type mismatch",
+      "hint": "Logic: Update OPF."
+    },
+    "OPF-030": {
+      "description": "unique-identifier missing",
+      "hint": "Logic: Generate UUID."
+    },
+    "OPF-031": {
+      "description": "Guide reference missing",
+      "hint": "Logic: Add to manifest."
+    },
+    "OPF-032": {
+      "description": "Invalid guide reference",
+      "hint": "Logic: Remove."
+    },
+    "OPF-033": {
+      "description": "No linear resources",
+      "hint": "Logic: Set `linear='yes'`."
+    },
+    "OPF-034": {
+      "description": "Duplicate references",
+      "hint": "Logic: Deduplicate."
+    },
+    "OPF-035": {
+      "description": "text/html inappropriate",
+      "hint": "Logic: Set type `application/xhtml+xml`."
+    },
+    "OPF-036": {
+      "description": "Video support caution",
+      "hint": "Valid."
+    },
+    "OPF-037": {
+      "description": "Unused media type",
+      "hint": "Cleanup: Delete file."
+    },
+    "OPF-038": {
+      "description": "OEBPS 1.2 type error",
+      "hint": "Logic: Update type."
+    },
+    "OPF-039": {
+      "description": "OEBPS 1.2 CSS error",
+      "hint": "Logic: Update type."
+    },
+    "OPF-040": {
+      "description": "Fallback item missing",
+      "hint": "Logic: Remove item."
+    },
+    "OPF-041": {
+      "description": "Fallback stylesheet missing",
+      "hint": "Logic: Remove ref."
+    },
+    "OPF-042": {
+      "description": "Disallowed spine types",
+      "hint": "Logic: Remove from spine."
+    },
+    "OPF-043": {
+      "description": "Non-standard type fallback missing",
+      "hint": "Logic: Add fallback to dummy txt."
+    },
+    "OPF-044": {
+      "description": "Non-standard fallback chain",
+      "hint": "Logic: Break chain."
+    },
+    "OPF-045": {
+      "description": "Fallback cycle",
+      "hint": "Logic: Remove fallback."
+    },
+    "OPF-046": {
+      "description": "Script property missing",
+      "hint": "Logic: Add property."
+    },
+    "OPF-047": {
+      "description": "OEBPS 1.2 syntax",
+      "hint": "Logic: Remove guide."
+    },
+    "OPF-048": {
+      "description": "unique-identifier attribute missing",
+      "hint": "Logic: Add attribute."
+    },
+    "OPF-049": {
+      "description": "ID missing",
+      "hint": "Logic: Generate ID."
+    },
+    "OPF-050": {
+      "description": "TOC type error",
+      "hint": "Logic: Fix type."
+    },
+    "OPF-052": {
+      "description": "Role value error",
+      "hint": "Logic: Set to `aut`."
+    },
+    "OPF-053": {
+      "description": "Date syntax warning",
+      "hint": "Logic: Format YYYY-MM-DD."
+    },
+    "OPF-054": {
+      "description": "Date validity error",
+      "hint": "Logic: Set to Today."
+    },
+    "OPF-055": {
+      "description": "Empty tag",
+      "hint": "Logic: Remove."
+    },
+    "OPF-056": {
+      "description": "Non-standard audio",
+      "hint": "Logic: Remove."
+    },
+    "OPF-058": {
+      "description": "Nav TOC not referenced",
+      "hint": "Logic: Add property."
+    },
+    "OPF-059": {
+      "description": "NCX TOC not referenced",
+      "hint": "Logic: Add to manifest."
+    },
+    "OPF-060": {
+      "description": "Duplicate items",
+      "hint": "Logic: Delete duplicates."
+    },
+    "OPF-061": {
+      "description": "Duplicate items (normalized)",
+      "hint": "Logic: Rename."
+    },
+    "OPF-062": {
+      "description": "Adobe page-map",
+      "hint": "Logic: Delete."
+    },
+    "OPF-063": {
+      "description": "page-map not found",
+      "hint": "Logic: Delete ref."
+    },
+    "OPF-064": {
+      "description": "Validation profile info",
+      "hint": "Valid."
+    },
+    "OPF-065": {
+      "description": "Metadata cycle",
+      "hint": "Logic: Remove refines."
+    },
+    "OPF-066": {
+      "description": "Pagination source missing",
+      "hint": "Logic: Add dummy `<dc:source>[AUTO-FIX] Source</dc:source>`."
+    },
+    "OPF-067": {
+      "description": "Resource listed twice",
+      "hint": "Logic: Deduplicate."
+    },
+    "OPF-068": {
+      "description": "Unknown collection role",
+      "hint": "Logic: Set `distributor`."
+    },
+    "OPF-069": {
+      "description": "idpf.org role prohibited",
+      "hint": "Logic: Remove."
+    },
+    "OPF_070": {
+      "description": "Invalid role URI",
+      "hint": "Logic: Fix URI."
+    },
+    "OPF-071": {
+      "description": "Index collection error",
+      "hint": "Logic: Delete."
+    },
+    "OPF-072": {
+      "description": "Empty metadata",
+      "hint": "Logic: Remove."
+    },
+    "OPF-073": {
+      "description": "External identifier prohibited",
+      "hint": "Logic: Remove."
+    },
+    "OPF-074": {
+      "description": "Duplicate declaration",
+      "hint": "Logic: Delete."
+    },
+    "OPF-075": {
+      "description": "Preview collection error",
+      "hint": "Logic: Delete."
+    },
+    "OPF-076": {
+      "description": "Fragment identifier prohibited",
+      "hint": "Logic: Remove fragment."
+    },
+    "OPF-077": {
+      "description": "Data navigation spine prohibited",
+      "hint": "Logic: Remove."
+    },
+    "OPF-078": {
+      "description": "Missing preface content",
+      "hint": "Valid."
+    },
+    "OPF-079": {
+      "description": "Dictionary type declaration required",
+      "hint": "Logic: Add type."
+    },
+    "OPF-080": {
+      "description": "Search key map extension",
+      "hint": "Logic: Rename."
+    },
+    "OPF-081": {
+      "description": "Dictionary resource missing",
+      "hint": "Logic: Delete."
+    },
+    "OPF-082": {
+      "description": "Multiple search key maps",
+      "hint": "Logic: Keep first."
+    },
+    "OPF-083": {
+      "description": "Search key map missing",
+      "hint": "Logic: Delete dict."
+    },
+    "OPF-084": {
+      "description": "Invalid dictionary resource",
+      "hint": "Logic: Fix type."
+    },
+    "OPF-085": {
+      "description": "Invalid UUID",
+      "hint": "Logic: Regenerate."
+    },
+    "OPF-086": {
+      "description": "Deprecated attribute usage",
+      "hint": "Logic: Remove."
+    },
+    "OPF-086b": {
+      "description": "epub:type deprecated",
+      "hint": "Logic: Remove."
+    },
+    "OPF-087": {
+      "description": "Disallowed epub:type",
+      "hint": "Logic: Remove."
+    },
+    "OPF-088": {
+      "description": "Unrecognized epub:type",
+      "hint": "Logic: Locate the `epub:type` attribute and DELETE only the attribute (keep the tag). Add comment nearby: ``."
+    },
+    "OPF-089": {
+      "description": "Alternate keyword error",
+      "hint": "Logic: Remove keyword."
+    },
+    "OPF-090": {
+      "description": "Recommended MIME type",
+      "hint": "Logic: Fix type."
+    },
+    "OPF-097": {
+      "description": "Unused resource (orphan file)",
+      "hint": "Cleanup: Delete file."
+    },
+    "PKG-001": {
+      "description": "Version mismatch",
+      "hint": "Logic: Force version 3.0."
+    },
+    "PKG-003": {
+      "description": "Header read error",
+      "hint": "Critical: Delete file. Replace refs with text: `[AUTO-FIX] File Read Error (filename)`."
+    },
+    "PKG-004": {
+      "description": "ZIP header corrupted",
+      "hint": "System: Repackage."
+    },
+    "PKG-005": {
+      "description": "mimetype extra fields",
+      "hint": "System: Repackage."
+    },
+    "PKG_006": {
+      "description": "mimetype missing/placement error",
+      "hint": "System: Repackage."
+    },
+    "PKG_007": {
+      "description": "mimetype content error",
+      "hint": "System: Overwrite."
+    },
+    "PKG_008": {
+      "description": "File not readable",
+      "hint": "Logic: Replace refs with `[AUTO-FIX] Unreadable File`."
+    },
+    "PKG_009": {
+      "description": "Filename character error",
+      "hint": "Logic: Rename. Update refs."
+    },
+    "PKG_010": {
+      "description": "Filename contains spaces",
+      "hint": "Logic: Replace with `_`. Update refs."
+    },
+    "PKG_011": {
+      "description": "Filename trailing dot",
+      "hint": "Logic: Remove dot. Update refs."
+    },
+    "PKG_012": {
+      "description": "Non-ASCII filename",
+      "hint": "Logic: Rename. Update refs."
+    },
+    "PKG_013": {
+      "description": "Multiple renditions",
+      "hint": "Logic: Force single."
+    },
+    "PKG_014": {
+      "description": "Empty directory",
+      "hint": "Logic: Delete."
+    },
+    "PKG_015": {
+      "description": "Content read error",
+      "hint": "Logic: Replace refs with `[AUTO-FIX] Content Error`."
+    },
+    "PKG-016": {
+      "description": "Lowercase extension recommended",
+      "hint": "Logic: Lowercase."
+    },
+    "PKG-017": {
+      "description": "Unusual extension",
+      "hint": "Logic: Append extension."
+    },
+    "PKG-018": {
+      "description": "EPUB file missing",
+      "hint": "Critical: Stop."
+    },
+    "PKG-020": {
+      "description": "OPF file missing",
+      "hint": "Critical: Link OPF."
+    },
+    "PKG-021": {
+      "description": "Corrupted image",
+      "hint": "Logic: Delete file. Replace refs with `<span class='error'>[AUTO-FIX] Corrupted Image Removed (filename)</span>`."
+    },
+    "PKG-022": {
+      "description": "Extension mismatch",
+      "hint": "Logic: Rename."
+    },
+    "PKG-023": {
+      "description": "EPUB 2 validation",
+      "hint": "Valid."
+    },
+    "PKG-024": {
+      "description": "Unusual extension info",
+      "hint": "Valid."
+    },
+    "RSC-001": {
+      "description": "Referenced resource missing from EPUB",
+      "hint": "Logic: Referenced file doesn't exist in EPUB. Smart resolution:\n1. Check EPUB for similar filenames (e.g., Section.xhtml missing → look for wrong.xhtml, section.xhtml, content.xhtml)\n2. If similar file exists: UPDATE the reference to point to the existing file\n   Example: <a href=\"Section.xhtml\"> → <a href=\"wrong.xhtml\"> (if wrong.xhtml exists)\n3. If no similar file: REMOVE the reference or comment it out\n   Example: Remove <item id=\"x\" href=\"missing.xhtml\"/> from manifest\n4. Check both manifest (content.opf) AND navigation files (nav.xhtml, toc.ncx)\n5. Add comment: <!--[AUTO-FIX] Missing file reference fixed-->"
+    },
+    "RSC-002": {
+      "description": "container.xml missing",
+      "hint": "Logic: Create."
+    },
+    "RSC-003": {
+      "description": "rootfile missing",
+      "hint": "Logic: Add."
+    },
+    "RSC-004": {
+      "description": "Encrypted file",
+      "hint": "Logic: Delete encryption.xml."
+    },
+    "RSC-005": {
+      "description": "Parsing error (often empty properties)",
+      "hint": "Logic: RSC-005 is a general parsing error. Fix based on error message:\n1. If \"empty properties\" or \"properties=\"\"\": DELETE the empty properties attribute completely\n2. If \"required attribute missing\" (e.g., src on img, href on a):\n   - For img tag without src: Either REMOVE the entire img tag OR add src=\"placeholder.jpg\" and ADD a placeholder.jpg file to manifest\n   - For a tag without href: REMOVE href attribute or unwrap the link\n   - Use URL-safe values (no brackets, no spaces)\n3. If \"lang and xml:lang must have same value\": Make both attributes identical (e.g., both=\"ko\")\n4. If \"elements from namespace not allowed\": Remove or comment out the invalid element\n5. If other XML structure error: Fix broken tags, close unclosed tags\n6. Always add comment: <!--[AUTO-FIX] RSC-005 Fixed-->\n7. CRITICAL: If you add a resource reference (like src=\"file.jpg\"), you MUST also add that file to the manifest in content.opf"
+    },
+    "RSC-006": {
+      "description": "Remote resource",
+      "hint": "Logic: Identify `href` pointing to http/https. Remove the `href` attribute entirely to disable the link. Append text `([AUTO-FIX] Remote Link Disabled)`."
+    },
+    "RSC-006b": {
+      "description": "External resource",
+      "hint": "Logic: Remove link."
+    },
+    "RSC-007": {
+      "description": "Referenced resource not found",
+      "hint": "Cascade Clean: Logic: The target file is missing. Delete the calling tag (link, img, script) completely. Insert comment: ``."
+    },
+    "RSC-007w": {
+      "description": "Referenced resource not found (warning)",
+      "hint": "Cascade Clean: Logic: The target file is missing. Delete the calling tag (link, img, script) completely. Insert comment: ``."
+    },
+    "RSC-008": {
+      "description": "Manifest not declared",
+      "hint": "Auto-Register: Add to manifest."
+    },
+    "RSC-009": {
+      "description": "Fragment identifier error",
+      "hint": "Logic: Remove `#fragment`."
+    },
+    "RSC-010": {
+      "description": "Non-standard resource",
+      "hint": "Logic: Delete resource."
+    },
+    "RSC-011": {
+      "description": "Non-spine reference",
+      "hint": "Logic: Add to spine."
+    },
+    "RSC-012": {
+      "description": "Undefined fragment",
+      "hint": "Logic: Remove `#fragment`."
+    },
+    "RSC-013": {
+      "description": "Stylesheet fragment",
+      "hint": "Logic: Remove `#fragment`."
+    },
+    "RSC-014": {
+      "description": "Incompatible fragment",
+      "hint": "Logic: Remove `#fragment`."
+    },
+    "RSC-015": {
+      "description": "use tag fragment",
+      "hint": "Logic: Delete tag."
+    },
+    "RSC-016": {
+      "description": "Fatal parsing error",
+      "hint": "Critical: Replace file content with `[AUTO-FIX] Fatal Error`."
+    },
+    "RSC-017": {
+      "description": "Parsing warning",
+      "hint": "Logic: Re-serialize."
+    },
+    "RSC-018": {
+      "description": "Alternate image not found",
+      "hint": "Logic: Remove ref."
+    },
+    "RSC-019": {
+      "description": "metadata.xml missing",
+      "hint": "Logic: Generate."
+    },
+    "RSC-020": {
+      "description": "Invalid URI",
+      "hint": "Logic: Encode."
+    },
+    "RSC-021": {
+      "description": "Search key map error",
+      "hint": "Logic: Delete."
+    },
+    "RSC-022": {
+      "description": "Image cannot be verified",
+      "hint": "Valid."
+    },
+    "RSC-023": {
+      "description": "URL host parsing error",
+      "hint": "Logic: Remove link."
+    },
+    "RSC-030": {
+      "description": "Non-standard or external path reference",
+      "hint": "Logic: File uses external or absolute path (not allowed in EPUB). Fix:\n1. If absolute file path to EXTERNAL file (e.g., file:///C:/win.ini, http://external.com):\n   - REMOVE the entire link/reference\n   - Add marker: <!--[AUTO-FIX] External reference removed-->\n2. If absolute path to file INSIDE EPUB (e.g., file:///C:/Users/.../OEBPS/file.xhtml):\n   - CONVERT to relative path (e.g., Text/file.xhtml or ../Images/img.jpg)\n   - Calculate relative path from current file location\n3. Remove any \"file:///\" prefix\n4. Ensure all paths use forward slashes (/)\n5. Example: file:///C:/win.ini → remove entire <a> tag\n6. Example: file:///OEBPS/Text/page.xhtml → Text/page.xhtml (if in same directory)"
+    },
+    "SCP-001": {
+      "description": "eval() usage prohibited",
+      "hint": "Security: Delete script. Comment: `/* [AUTO-FIX] Removed eval */`."
+    },
+    "SCP-002": {
+      "description": "XMLHttpRequest prohibited",
+      "hint": "Security: Delete script. Comment: `/* [AUTO-FIX] Removed XHR */`."
+    },
+    "SCP-003": {
+      "description": "Local storage unsupported",
+      "hint": "Security: Delete script."
+    },
+    "SCP-004": {
+      "description": "EPUB 2 scripts prohibited",
+      "hint": "Logic: Delete script."
+    },
+    "SCP-006": {
+      "description": "Inline scripts found",
+      "hint": "Logic: Delete. Comment: ``."
+    },
+    "SCP-007": {
+      "description": "innerHtml usage",
+      "hint": "Logic: Comment out."
+    },
+    "SCP-008": {
+      "description": "innerText usage",
+      "hint": "Logic: Comment out."
+    },
+    "SCP-009": {
+      "description": "Mouse events",
+      "hint": "Logic: Add `ontouchstart`."
+    },
+    "SCP_010": {
+      "description": "Script included",
+      "hint": "Logic: Add property."
     }
   }
 }

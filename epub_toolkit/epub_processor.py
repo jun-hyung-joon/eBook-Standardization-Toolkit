@@ -314,10 +314,10 @@ class EPUBProcessor:
             raise RuntimeError(f"EPUBCheck execution failed: {e}")
 
     def _parse_epubcheck_text(self, text: str) -> List[ErrorInfo]:
-        """Parse text log output (regex)"""
+        """Parse text log output (two-step regex to handle 'C: /path' format)"""
         errors = []
-        # Detect all levels including USAGE
-        pattern = re.compile(r'(ERROR|WARNING|FATAL|USAGE)\(([A-Z0-9-]+)\):\s*(?:(.*?)(?:\((\d+),(\d+)\))?:\s*)?(.+)')
+        # First step: match severity and code, capture rest as full_text
+        pattern = re.compile(r'(ERROR|WARNING|FATAL|USAGE)\(([A-Z0-9-]+)\):\s*(.+)$')
         
         for line in text.splitlines():
             line = line.strip()
@@ -325,13 +325,30 @@ class EPUBProcessor:
             
             m = pattern.search(line)
             if m:
-                sev, code, path, l, c, msg = m.groups()
-                if not path: path = 'unknown'
+                sev, code, full_text = m.groups()
                 
-                # Clean path: remove .epub/ prefix or extract filename from absolute path
-                if '.epub/' in path: 
+                # Second step: parse full_text to extract path, line, column, message
+                # Pattern: <path>(<line>,<column>): <message> OR <path>: <message>
+                detail_match = re.search(r'^(.+?)\((\d+),(\d+)\):\s*(.+)$', full_text)
+                if detail_match:
+                    path, l, c, msg = detail_match.groups()
+                else:
+                    # Try without line/column
+                    detail_match = re.search(r'^(.+?):\s*(.+)$', full_text)
+                    if detail_match:
+                        path, msg = detail_match.groups()
+                        l, c = None, None
+                    else:
+                        # Fallback: no colon found, treat entire text as path
+                        path, msg, l, c = full_text, "", None, None
+                
+                # Clean path: remove "C: " prefix and extract EPUB-relative path
+                path = re.sub(r'^[A-Z]:\s*', '', path)  # Remove "C: " or "D: "
+                
+                if '.epub/' in path:
                     path = path.split('.epub/')[-1]
                 elif path.startswith('/') or ':\\' in path:
+                    # Absolute path without .epub - use filename only
                     path = Path(path).name
                 
                 errors.append(ErrorInfo(
@@ -344,6 +361,7 @@ class EPUBProcessor:
                     severity=sev
                 ))
         return errors
+
 
     def _get_target_file(self, error: ErrorInfo, opf_file: str, fixer: Optional[IntelligentEPUBFixer] = None) -> str:
         """Route to correct target when error location differs from fix target (JSON-driven)"""
