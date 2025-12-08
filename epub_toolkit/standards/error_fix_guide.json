@@ -41,7 +41,7 @@
     },
     "ACC-002": {
       "description": "Input element not referenced by label",
-      "hint": "Logic: Generate ID. Inject <label for='ID' class='visually-hidden'>[AUTO-FIX] Input Label</label>."
+      "hint": "Logic: Form input missing label\nFIX: GENERATE ID for input, add label element\n<label for=\"input_id\" class=\"visually-hidden\">[AUTO-FIX] Input</label>\n<input id=\"input_id\"/>\nAdd comment: <!--[AUTO-FIX] Label generated-->"
     },
     "ACC-008": {
       "description": "Missing landmark nav element",
@@ -49,11 +49,11 @@
     },
     "ACC-009": {
       "description": "Missing MathML alttext",
-      "hint": "Logic: Add alttext='[AUTO-FIX] Formula'."
+      "hint": "Logic: Math formula missing alttext\nFIX: ADD alt attribute with description\n<img class=\"math\" alt=\"[AUTO-FIX] Mathematical Formula\"/>\nOr use MathML if possible\nAdd comment: <!--[AUTO-FIX] Alt text added-->"
     },
     "ACC-011": {
       "description": "Missing title for SVG hyperlink",
-      "hint": "Logic: Insert <title>[AUTO-FIX] Link</title> into SVG <a>."
+      "hint": "Logic: SVG link missing title\nFIX: INSERT title element into SVG anchor\n<a xlink:href=\"...\"><title>[AUTO-FIX] Link</title>...</a>\nAdd comment: <!--[AUTO-FIX] SVG title added-->"
     },
     "ACC-013": {
       "description": "Inline styles found",
@@ -61,47 +61,47 @@
     },
     "ACC-014": {
       "description": "Absolute units for font-size",
-      "hint": "Logic: Convert px to em. Add HTML comment nearby: ``."
+      "hint": "Logic: Font size in px (not accessible)\nFIX: CONVERT px to em or rem\n16px → 1em, 14px → 0.875em\nAdd comment: <!--[AUTO-FIX] Converted to em-->"
     },
     "ACC-015": {
       "description": "Absolute units for line-height",
-      "hint": "Logic: Strip unit. Add HTML comment: ``."
+      "hint": "Logic: Line-height has unit (should be unitless)\nFIX: STRIP unit from line-height\nline-height: 1.5em → line-height: 1.5\nAdd comment: <!--[AUTO-FIX] Unit removed-->"
     },
     "ACC-016": {
       "description": "font-size must be relative",
-      "hint": "Logic: Convert to rem. Add comment: ``."
+      "hint": "Logic: Absolute units used (px, pt)\nFIX: CONVERT to rem for scalability\n12px → 0.75rem, 16px → 1rem\nAdd comment: <!--[AUTO-FIX] Converted to rem-->"
     },
     "ACC-017": {
       "description": "line-height must be relative",
-      "hint": "Logic: Remove unit."
+      "hint": "Logic: Zero value has unit\nFIX: REMOVE unit from zero values\nmargin: 0px → margin: 0\nAdd comment: /* [AUTO-FIX] Unnecessary unit removed */"
     },
     "CHK-001": {
       "description": "Missing message file",
-      "hint": "System: Re-install EPUBCheck."
+      "hint": "System: EPUBCheck not installed\nFIX: Re-install EPUBCheck\nThis is a system issue, not EPUB content\nUser needs to install validation tools"
     },
     "CHK-002": {
       "description": "Unrecognized message ID",
-      "hint": "System: Update EPUBCheck."
+      "hint": "System: EPUBCheck needs update\nFIX: Update EPUBCheck to latest version\nSystem maintenance required\nNo content fix needed"
     },
     "CHK-003": {
       "description": "Unrecognized severity",
-      "hint": "System: Check config."
+      "hint": "System: Configuration issue\nFIX: Check config files\nVerify paths and settings\nSystem setup required"
     },
     "CHK-004": {
       "description": "Parameter overflow",
-      "hint": "System: Check config."
+      "hint": "System: Configuration missing\nFIX: Check config files\nRestore default configuration\nSystem setup required"
     },
     "CHK-005": {
       "description": "Suggestion parameter overflow",
-      "hint": "System: Check config."
+      "hint": "System: Invalid configuration\nFIX: Check and correct config\nValidate configuration values\nSystem setup required"
     },
     "CHK-006": {
       "description": "Parameter parse failure",
-      "hint": "System: Check config."
+      "hint": "System: Configuration path error\nFIX: Check file paths in config\nVerify all paths exist\nSystem setup required"
     },
     "CHK-007": {
       "description": "Message file processing error",
-      "hint": "System: Check config."
+      "hint": "System: Configuration permission error\nFIX: Check file permissions\nEnsure read/write access\nSystem setup required"
     },
     "CHK-008": {
       "description": "Item processing error",
@@ -109,103 +109,103 @@
     },
     "CSS-001": {
       "description": "Contains forbidden properties",
-      "hint": "Logic: Delete property. Add comment: `/* [AUTO-FIX] Removed forbidden property */`."
+      "hint": "Logic: Forbidden CSS property used\nFIX: DELETE the forbidden property\nForbidden: position:fixed, direction, unicode-bidi in some cases\nRemove line completely\nAdd comment: /* [AUTO-FIX] Removed forbidden property */"
     },
     "CSS-002": {
       "description": "Empty/NULL reference",
-      "hint": "Logic: Delete line. Add comment: `/* [AUTO-FIX] Removed empty url */`."
+      "hint": "Logic: Empty url() in CSS\nFIX: DELETE the rule with empty url()\nExample: background: url(); → remove entire line\nAdd comment: /* [AUTO-FIX] Removed empty url */"
     },
     "CSS-003": {
       "description": "Encoding error",
-      "hint": "Logic: Force UTF-8. Prepend `@charset 'UTF-8'; /* [AUTO-FIX] Encoding forced */`."
+      "hint": "Logic: CSS file not UTF-8 encoded\nFIX: Force UTF-8 encoding, add @charset\nPrepend: @charset \"UTF-8\";\nResave file as UTF-8 (no BOM)\nAdd comment: /* [AUTO-FIX] Encoding forced */"
     },
     "CSS-004": {
       "description": "BOM detected",
-      "hint": "Logic: Save as UTF-8 (No BOM)."
+      "hint": "Logic: BOM detected\nFIX: Check CSS for specific issue mentioned in error\nLocation: CSS stylesheet files\nCommon fixes:\n- Remove forbidden properties\n- Fix syntax errors\n- Add fallbacks for unsupported features\n- Ensure proper encoding\nAdd comment: /* [AUTO-FIX] CSS-004 fixed */"
     },
     "CSS-005": {
       "description": "Conflicting fallback styles",
-      "hint": "Logic: Remove duplicate. Add comment: `/* [AUTO-FIX] Removed conflict */`."
+      "hint": "Logic: Duplicate CSS selector\nFIX: MERGE rules or REMOVE duplicate\nCombine properties into single rule\nAdd comment: /* [AUTO-FIX] Removed duplicate */"
     },
     "CSS-006": {
       "description": "Use of fixed positioning",
-      "hint": "Logic: Change to `absolute`. Add comment: `/* [AUTO-FIX] Fixed changed to absolute */`."
+      "hint": "Logic: position:fixed not allowed in EPUB\nFIX: Change to position:absolute\nOr remove position property entirely\nAdd comment: /* [AUTO-FIX] Fixed changed to absolute */"
     },
     "CSS-007": {
       "description": "Non-standard font reference",
-      "hint": "Logic: Comment out block: `/* [AUTO-FIX] Disabled non-standard font */`."
+      "hint": "Logic: @font-face external font URL\nFIX: Either REMOVE or embed font\nExternal fonts: remove @font-face Or embed font file\nAdd comment: /* [AUTO-FIX] External font removed */"
     },
     "CSS-008": {
       "description": "CSS parsing error",
-      "hint": "Logic: Comment out error block: `/* [AUTO-FIX] CSS Parsing Error Disabled */`."
+      "hint": "Logic: CSS gradient not widely supported\nFIX: Accept as warning OR provide fallback\nAdd solid color fallback before gradient\nbackground: #ccc; background: linear-gradient(...)\nAdd comment: /* [AUTO-FIX] Fallback added */"
     },
     "CSS-009": {
       "description": "Potential pagination issues",
-      "hint": "Logic: Remove properties. Add comment: `/* [AUTO-FIX] Removed pagination props */`."
+      "hint": "Logic: Animation/transition may not work\nFIX: Accept as warning, test on devices\nEPUB animation support varies by reader\nNo automatic fix needed\nAdd comment: /* [AUTO-FIX] Animation noted */"
     },
     "CSS-010": {
       "description": "Stylesheet type error",
-      "hint": "Logic: Force `type='text/css'`."
+      "hint": "Logic: Vendor prefix needed or outdated\nFIX: ADD modern standard property\nOld: -webkit-transform\nAdd: transform (standard, without prefix)\nAdd comment: /* [AUTO-FIX] Standard property added */"
     },
     "CSS-012": {
       "description": "Multiple CSS links",
-      "hint": "Valid: Ignore."
+      "hint": "Valid: Multiple CSS files linked\nThis is informational - having multiple CSS files is allowed\nNo fix needed, just a note"
     },
     "CSS-013": {
       "description": "Use of !important",
-      "hint": "Logic: Remove `!important`."
+      "hint": "Logic: Use of !important\nFIX: Check CSS for specific issue mentioned in error\nLocation: CSS stylesheet files\nCommon fixes:\n- Remove forbidden properties\n- Fix syntax errors\n- Add fallbacks for unsupported features\n- Ensure proper encoding\nAdd comment: /* [AUTO-FIX] CSS-013 fixed */"
     },
     "CSS-015": {
       "description": "Alternate stylesheet title missing",
-      "hint": "Logic: Add `title='[AUTO-FIX] Alternate'`."
+      "hint": "Logic: Overly specific selectors\nFIX: Simplify selectors\ndiv#id.class[attr] → #id (ID is specific enough)\nAdd comment: /* [AUTO-FIX] Selector simplified */"
     },
     "CSS-017": {
       "description": "Use of absolute positioning",
-      "hint": "Logic: Warn only. If critical, comment out property with `/* [AUTO-FIX] Disabled absolute pos */`."
+      "hint": "Logic: Use of absolute positioning\nFIX: Check CSS for specific issue mentioned in error\nLocation: CSS stylesheet files\nCommon fixes:\n- Remove forbidden properties\n- Fix syntax errors\n- Add fallbacks for unsupported features\n- Ensure proper encoding\nAdd comment: /* [AUTO-FIX] CSS-017 fixed */"
     },
     "CSS-019": {
       "description": "Empty @font-face",
-      "hint": "Logic: Delete block."
+      "hint": "Logic: @import not recommended\nFIX: DELETE @import, inline the CSS instead\nCopy imported CSS content directly\nAdd comment: /* [AUTO-FIX] Import inlined */"
     },
     "CSS-020": {
       "description": "Invalid font-size value",
-      "hint": "Logic: Set to `1em`. Comment: `/* [AUTO-FIX] Invalid size reset */`."
+      "hint": "Logic: Invalid font-size value\nFIX: Check CSS for specific issue mentioned in error\nLocation: CSS stylesheet files\nCommon fixes:\n- Remove forbidden properties\n- Fix syntax errors\n- Add fallbacks for unsupported features\n- Ensure proper encoding\nAdd comment: /* [AUTO-FIX] CSS-020 fixed */"
     },
     "CSS-021": {
       "description": "Invalid system font",
-      "hint": "Logic: Append `, sans-serif`. Comment: `/* [AUTO-FIX] Added generic font */`."
+      "hint": "Logic: Invalid system font\nFIX: Check CSS for specific issue mentioned in error\nLocation: CSS stylesheet files\nCommon fixes:\n- Remove forbidden properties\n- Fix syntax errors\n- Add fallbacks for unsupported features\n- Ensure proper encoding\nAdd comment: /* [AUTO-FIX] CSS-021 fixed */"
     },
     "CSS-022": {
       "description": "Global margin settings",
-      "hint": "Logic: Change `*` to `body`."
+      "hint": "Logic: Universal selector * too broad\nFIX: Change * to body or more specific selector\n* {margin:0} → body {margin:0}\nAdd comment: /* [AUTO-FIX] Selector narrowed */"
     },
     "CSS-023": {
       "description": "Use of media queries",
-      "hint": "Logic: Remove non-standard block. Comment: `/* [AUTO-FIX] Removed non-standard media */`."
+      "hint": "Logic: Use of media queries\nFIX: Check CSS for specific issue mentioned in error\nLocation: CSS stylesheet files\nCommon fixes:\n- Remove forbidden properties\n- Fix syntax errors\n- Add fallbacks for unsupported features\n- Ensure proper encoding\nAdd comment: /* [AUTO-FIX] CSS-023 fixed */"
     },
     "CSS-024": {
       "description": "Unused classes",
-      "hint": "Valid: Ignore."
+      "hint": "Valid: Unused CSS classes detected\nInformational - no actual error\nConsider removing unused CSS for optimization\nNo required fix"
     },
     "CSS-025": {
       "description": "Missing class selectors",
-      "hint": "Logic: Create `.classname { /* [AUTO-FIX] Empty rule */ }`."
+      "hint": "Logic: Missing class selectors\nFIX: Check CSS for specific issue mentioned in error\nLocation: CSS stylesheet files\nCommon fixes:\n- Remove forbidden properties\n- Fix syntax errors\n- Add fallbacks for unsupported features\n- Ensure proper encoding\nAdd comment: /* [AUTO-FIX] CSS-025 fixed */"
     },
     "CSS-028": {
       "description": "Font-face usage warning",
-      "hint": "Logic: If dangerous, delete block. Comment: `/* [AUTO-FIX] Removed unsafe font url */`."
+      "hint": "Logic: Font-face usage warning\nFIX: Check CSS for specific issue mentioned in error\nLocation: CSS stylesheet files\nCommon fixes:\n- Remove forbidden properties\n- Fix syntax errors\n- Add fallbacks for unsupported features\n- Ensure proper encoding\nAdd comment: /* [AUTO-FIX] CSS-028 fixed */"
     },
     "HTM-001": {
       "description": "Invalid XML",
-      "hint": "Logic: Fix tags. Add comment at top: ``."
+      "hint": "Logic: Invalid XML\nFIX: Check error message for specific issue\nLocation: XHTML content files\nCommon fixes:\n- Remove invalid/deprecated elements\n- Add missing required attributes\n- Fix element nesting and structure\n- Ensure HTML5 compliance\nAdd comment: <!--[AUTO-FIX] HTM-001 fixed-->"
     },
     "HTM-002": {
       "description": "Cannot determine XML version",
-      "hint": "Logic: Prepend XML declaration."
+      "hint": "Logic: iframe element not allowed\nFIX: REMOVE iframe completely\nEPUB does not support iframes for security\n<iframe> → remove entire element\nAdd comment: <!--[AUTO-FIX] iframe removed-->"
     },
     "HTM-003": {
       "description": "External entity usage",
-      "hint": "Security: Remove subset."
+      "hint": "Logic: Object/embed element issues\nFIX: Replace with img or remove\n<object> or <embed> → <img> if image, else remove\nAdd fallback content\nAdd comment: <!--[AUTO-FIX] Object replaced-->"
     },
     "HTM-004": {
       "description": "Non-standard DOCTYPE",
@@ -213,39 +213,39 @@
     },
     "HTM-005": {
       "description": "External references found",
-      "hint": "Logic: Unwrap <a> tag. Append `<span>([AUTO-FIX] Link Removed)</span>`."
+      "hint": "Logic: External link in ebook\nFIX: Mark external links or remove\nFor http/https links: add rel=\"external\" or remove\nAdd notification: <span>([AUTO-FIX] External Link Removed)</span>\nAdd comment: <!--[AUTO-FIX] External link handled-->"
     },
     "HTM-006": {
       "description": "Named entity found",
-      "hint": "Logic: Decode entities."
+      "hint": "Logic: Named entity used instead of numeric\nFIX: DECODE entities or use Unicode\n&nbsp; → \\u00A0 or numeric &#160;\n&copy; → © or &#169;\nAdd comment: <!--[AUTO-FIX] Entities decoded-->"
     },
     "HTM-007": {
       "description": "ssml:ph empty value",
-      "hint": "Logic: Remove attribute."
+      "hint": "Logic: SSML (Speech Synthesis) attributes\nFIX: Remove SSML attributes (not standard HTML)\nssml:ph, ssml:alphabet → remove these\nAdd comment: <!--[AUTO-FIX] SSML attributes removed-->"
     },
     "HTM-008": {
       "description": "Missing src attribute",
-      "hint": "Logic: Replace <img> with `<span style='border:1px solid red; color:red;'>[AUTO-FIX] Image Source Missing</span>`."
+      "hint": "Logic: Incorrect heading hierarchy\nFIX: Fix heading levels (h1→h2→h3, no skips)\nDon't skip from h2 to h4\nReorder headings properly\nAdd comment: <!--[AUTO-FIX] Headings reordered-->"
     },
     "HTM-009": {
       "description": "Legacy DOCTYPE",
-      "hint": "Logic: Replace DOCTYPE."
+      "hint": "Logic: Empty heading element\nFIX: ADD content or REMOVE heading\n<h1></h1> → <h1>[AUTO-FIX] Untitled</h1> or remove\nAdd comment: <!--[AUTO-FIX] Empty heading fixed-->"
     },
     "HTM-010": {
       "description": "Namespace URI found",
-      "hint": "Logic: Force standard namespace."
+      "hint": "Logic: Image missing alt attribute\nFIX: ADD alt with description\n<img src=\"...\" → <img src=\"...\" alt=\"[AUTO-FIX] Image\"\nOr alt=\"\" for decorative images\nAdd comment: <!--[AUTO-FIX] Alt attribute added-->"
     },
     "HTM-011": {
       "description": "Undeclared entity",
-      "hint": "Logic: Replace with `[AUTO-FIX] Unknown Entity`."
+      "hint": "Logic: Table missing caption or summary\nFIX: ADD caption element\n<table><caption>[AUTO-FIX] Table</caption>...</table>\nAdd comment: <!--[AUTO-FIX] Caption added-->"
     },
     "HTM-012": {
       "description": "External CFI link",
-      "hint": "Logic: Strip fragment."
+      "hint": "Logic: List structure invalid\nFIX: Ensure li only inside ul/ol\nNo orphan <li> elements\nWrap in <ul> if needed\nAdd comment: <!--[AUTO-FIX] List structure fixed-->"
     },
     "HTM-013": {
       "description": "Internal CFI found",
-      "hint": "Logic: Strip fragment."
+      "hint": "Logic: Deprecated HTML element used\nFIX: REPLACE with modern HTML5 equivalent\n<center> → <div style=\"text-align:center\"> or CSS\n<font> → <span> with CSS\n<u> → <em> or CSS text-decoration\nAdd comment: <!--[AUTO-FIX] Deprecated element modernized-->"
     },
     "HTM-014": {
       "description": "Incorrect extension",
@@ -257,67 +257,67 @@
     },
     "HTM-017": {
       "description": "Language value mismatch",
-      "hint": "Logic: Sync lang."
+      "hint": "Logic: Language value mismatch\nFIX: Check error message for specific issue\nLocation: XHTML content files\nCommon fixes:\n- Remove invalid/deprecated elements\n- Add missing required attributes\n- Fix element nesting and structure\n- Ensure HTML5 compliance\nAdd comment: <!--[AUTO-FIX] HTM-017 fixed-->"
     },
     "HTM-018": {
       "description": "Invalid xml:lang",
-      "hint": "Logic: Set `xml:lang='en'`."
+      "hint": "Logic: ID attribute not unique\nFIX: GENERATE unique IDs\nEnsure each ID appears only once in file\nRename duplicates: id=\"dup\" → id=\"dup_2\"\nAdd comment: <!--[AUTO-FIX] Duplicate ID resolved-->"
     },
     "HTM-019": {
       "description": "Invalid lang",
-      "hint": "Logic: Set `lang='en'`."
+      "hint": "Logic: Anchor target missing\nFIX: Either REMOVE link OR add target element\n<a href=\"#missing\"> → remove or create <div id=\"missing\">\nAdd comment: <!--[AUTO-FIX] Anchor target added-->"
     },
     "HTM-020": {
       "description": "Missing xml:lang",
-      "hint": "Logic: Add `xml:lang='en'`."
+      "hint": "Logic: Table accessibility issues\nFIX: ADD proper table structure\nUse <thead>, <tbody>, <th> with scope attribute\nAdd <caption> for description\nAdd comment: <!--[AUTO-FIX] Table structure improved-->"
     },
     "HTM-021": {
       "description": "Missing lang",
-      "hint": "Logic: Add `lang='en'`."
+      "hint": "Logic: Meta refresh not allowed\nFIX: REMOVE meta refresh tags\n<meta http-equiv=\"refresh\"> → remove entirely\nEPUB should not auto-redirect\nAdd comment: <!--[AUTO-FIX] Meta refresh removed-->"
     },
     "HTM-022": {
       "description": "Excessive div/span",
-      "hint": "Optimization: Unwrap."
+      "hint": "Optimization: Unwrap nested span/div elements that add no value\nFIX: Remove wrapper elements, keep content\nExample: <span><span>text</span></span> → <span>text</span>\nAdd comment: <!--[AUTO-FIX] Unwrapped element-->"
     },
     "HTM-025": {
       "description": "Unregistered URI scheme",
-      "hint": "Logic: Remove href. Append `([AUTO-FIX] Link Disabled)`."
+      "hint": "Logic: Style block in body\nFIX: MOVE style to <head> section\n<style> should be in <head>, not <body>\nExtract and relocate\nAdd comment: <!--[AUTO-FIX] Style moved to head-->"
     },
     "HTM-027": {
       "description": "Not enough list items",
-      "hint": "Logic: Inject `<li>[AUTO-FIX] Empty List Item</li>`."
+      "hint": "Logic: Invalid nesting of elements\nFIX: Correct element nesting\n<p><p>text</p></p> → <p>text</p>\nEnsure proper parent-child relationships\nAdd comment: <!--[AUTO-FIX] Nesting corrected-->"
     },
     "HTM-028": {
       "description": "Missing input id",
-      "hint": "Logic: Generate ID."
+      "hint": "Logic: Missing input id\nFIX: Check error message for specific issue\nLocation: XHTML content files\nCommon fixes:\n- Remove invalid/deprecated elements\n- Add missing required attributes\n- Fix element nesting and structure\n- Ensure HTML5 compliance\nAdd comment: <!--[AUTO-FIX] HTM-028 fixed-->"
     },
     "HTM-029": {
       "description": "Missing label for",
-      "hint": "Logic: Link label to ID."
+      "hint": "Logic: Required child element missing\nFIX: ADD missing required child\nExample: <select> needs <option> children\nAdd required elements\nAdd comment: <!--[AUTO-FIX] Required child added-->"
     },
     "HTM-033": {
       "description": "Missing title",
-      "hint": "Logic: Inject `<title>[AUTO-FIX] Untitled</title>`."
+      "hint": "Logic: Missing title\nFIX: Check error message for specific issue\nLocation: XHTML content files\nCommon fixes:\n- Remove invalid/deprecated elements\n- Add missing required attributes\n- Fix element nesting and structure\n- Ensure HTML5 compliance\nAdd comment: <!--[AUTO-FIX] HTM-033 fixed-->"
     },
     "HTM-044": {
       "description": "Unused namespace",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Unused namespace\nFIX: Check error message for specific issue\nLocation: XHTML content files\nCommon fixes:\n- Remove invalid/deprecated elements\n- Add missing required attributes\n- Fix element nesting and structure\n- Ensure HTML5 compliance\nAdd comment: <!--[AUTO-FIX] HTM-044 fixed-->"
     },
     "HTM-045": {
       "description": "Empty href",
-      "hint": "Logic: Set `href='#'` and add `title='[AUTO-FIX] Empty Link'`."
+      "hint": "Logic: Empty href\nFIX: Check error message for specific issue\nLocation: XHTML content files\nCommon fixes:\n- Remove invalid/deprecated elements\n- Add missing required attributes\n- Fix element nesting and structure\n- Ensure HTML5 compliance\nAdd comment: <!--[AUTO-FIX] HTM-045 fixed-->"
     },
     "HTM-046": {
       "description": "Missing viewport",
-      "hint": "Logic: Inject viewport meta."
+      "hint": "Logic: Missing viewport\nFIX: Check error message for specific issue\nLocation: XHTML content files\nCommon fixes:\n- Remove invalid/deprecated elements\n- Add missing required attributes\n- Fix element nesting and structure\n- Ensure HTML5 compliance\nAdd comment: <!--[AUTO-FIX] HTM-046 fixed-->"
     },
     "HTM-047": {
       "description": "Viewport dimensions missing",
-      "hint": "Logic: Update meta."
+      "hint": "Logic: Viewport dimensions missing\nFIX: Check error message for specific issue\nLocation: XHTML content files\nCommon fixes:\n- Remove invalid/deprecated elements\n- Add missing required attributes\n- Fix element nesting and structure\n- Ensure HTML5 compliance\nAdd comment: <!--[AUTO-FIX] HTM-047 fixed-->"
     },
     "HTM-048": {
       "description": "Missing SVG viewBox",
-      "hint": "Logic: Set `viewBox='0 0 100 100'`."
+      "hint": "Logic: Missing SVG viewBox\nFIX: Check error message for specific issue\nLocation: XHTML content files\nCommon fixes:\n- Remove invalid/deprecated elements\n- Add missing required attributes\n- Fix element nesting and structure\n- Ensure HTML5 compliance\nAdd comment: <!--[AUTO-FIX] HTM-048 fixed-->"
     },
     "HTM_049": {
       "description": "Missing xmlns",
@@ -325,31 +325,31 @@
     },
     "HTM-050": {
       "description": "pagebreak attribute found",
-      "hint": "Logic: Remove attribute."
+      "hint": "Logic: pagebreak attribute found\nFIX: Check error message for specific issue\nLocation: XHTML content files\nCommon fixes:\n- Remove invalid/deprecated elements\n- Add missing required attributes\n- Fix element nesting and structure\n- Ensure HTML5 compliance\nAdd comment: <!--[AUTO-FIX] HTM-050 fixed-->"
     },
     "HTM-051": {
       "description": "RDFa recommended",
-      "hint": "Logic: Strip Microdata."
+      "hint": "Logic: RDFa recommended\nFIX: Check error message for specific issue\nLocation: XHTML content files\nCommon fixes:\n- Remove invalid/deprecated elements\n- Add missing required attributes\n- Fix element nesting and structure\n- Ensure HTML5 compliance\nAdd comment: <!--[AUTO-FIX] HTM-051 fixed-->"
     },
     "HTM-052": {
       "description": "Region-based attribute error",
-      "hint": "Logic: Remove attribute."
+      "hint": "Logic: Region-based attribute error\nFIX: Check error message for specific issue\nLocation: XHTML content files\nCommon fixes:\n- Remove invalid/deprecated elements\n- Add missing required attributes\n- Fix element nesting and structure\n- Ensure HTML5 compliance\nAdd comment: <!--[AUTO-FIX] HTM-052 fixed-->"
     },
     "HTM-053": {
       "description": "file:// links found",
-      "hint": "Logic: Remove href. Append `([AUTO-FIX] Local Link Removed)`."
+      "hint": "Logic: file:// links found\nFIX: Check error message for specific issue\nLocation: XHTML content files\nCommon fixes:\n- Remove invalid/deprecated elements\n- Add missing required attributes\n- Fix element nesting and structure\n- Ensure HTML5 compliance\nAdd comment: <!--[AUTO-FIX] HTM-053 fixed-->"
     },
     "INF-001": {
       "description": "Informational message",
-      "hint": "Valid."
+      "hint": "Valid: Informational message only\nNo errors or warnings\nNo fix needed"
     },
     "MED-001": {
       "description": "Video poster type error",
-      "hint": "Logic: Remove poster."
+      "hint": "Logic: Video has poster attribute\nFIX: REMOVE poster attribute (not well supported)\n<video poster=\"...\" → <video>\nOr accept as warning only\nAdd comment: <!--[AUTO-FIX] Poster removed-->"
     },
     "MED-002": {
       "description": "Fallback not provided",
-      "hint": "Logic: Inject `<span>[AUTO-FIX] Media Not Supported</span>`."
+      "hint": "Logic: Media element missing fallback text\nFIX: INJECT fallback content\n<video><span>[AUTO-FIX] Media Not Supported</span></video>\nAdd comment: <!--[AUTO-FIX] Fallback added-->"
     },
     "MED-003": {
       "description": "Image fallback required",
@@ -361,23 +361,23 @@
     },
     "MED-005": {
       "description": "Non-standard audio type",
-      "hint": "Logic: Remove tag. Keep fallback text if exists."
+      "hint": "Logic: Unsupported media type\nFIX: REMOVE tag, keep fallback text if exists\n<audio><p>Description</p></audio> → <p>Description</p>\nAdd comment: <!--[AUTO-FIX] Unsupported media removed-->"
     },
     "MED-006": {
       "description": "SVG filename reference caution",
-      "hint": "Logic: If missing, remove <image>. Insert text `[AUTO-FIX] Missing SVG Image`."
+      "hint": "Logic: SVG missing fallback image\nFIX: If <image> is missing, remove or add text\n<svg><text>[AUTO-FIX] Diagram</text></svg>\nAdd comment: <!--[AUTO-FIX] Fallback added-->"
     },
     "MED-007": {
       "description": "External resource reference error",
-      "hint": "Logic: Add type."
+      "hint": "Logic: Media source missing type attribute\nFIX: ADD type attribute to source elements\n<source src=\"file.mp4\" type=\"video/mp4\"/>\nAdd comment: <!--[AUTO-FIX] Type added-->"
     },
     "NAV-001": {
       "description": "EPUB2 nav not supported",
-      "hint": "Logic: Generate NCX."
+      "hint": "Logic: NCX file missing or incomplete\nFIX: GENERATE toc.ncx from navigation structure\nCreate basic NCX structure with navMap\nReference in content.opf manifest\nAdd comment: <!--[AUTO-FIX] NCX generated-->"
     },
     "NAV-002": {
       "description": "page-list found",
-      "hint": "Valid."
+      "hint": "Valid: page-list found in navigation\nThis is valid EPUB 3 structure\nNo fix needed"
     },
     "NAV-003": {
       "description": "Missing page list",
@@ -385,11 +385,11 @@
     },
     "NAV-004": {
       "description": "Full title hierarchy required",
-      "hint": "Logic: Flatten list."
+      "hint": "Logic: nav lists nested too deeply\nFIX: FLATTEN navigation structure\nLimit nesting to 3-4 levels maximum\nAdd comment: <!--[AUTO-FIX] Navigation flattened-->"
     },
     "NAV-005": {
       "description": "Missing list of audio",
-      "hint": "Logic: Generate hidden nav."
+      "hint": "Logic: Missing landmarks navigation\nFIX: GENERATE hidden nav with epub:type=\"landmarks\"\nInclude cover, toc, bodymatter references\nAdd comment: <!--[AUTO-FIX] Landmarks generated-->"
     },
     "NAV-006": {
       "description": "Missing list of illustrations",
@@ -413,27 +413,27 @@
     },
     "NAV-011": {
       "description": "Ordering error",
-      "hint": "Logic: Reorder."
+      "hint": "Logic: Navigation items out of reading order\nFIX: REORDER nav items to match spine\nSort by appearance in spine\nAdd comment: <!--[AUTO-FIX] Navigation reordered-->"
     },
     "NCX-001": {
       "description": "NCX ID mismatch",
-      "hint": "Logic: Sync ID."
+      "hint": "Logic: NCX uid doesn't match OPF unique-identifier\nFIX: SYNC NCX uid with dc:identifier value\nIn toc.ncx: <meta name=\"dtb:uid\" content=\"SAME-AS-DC-IDENTIFIER\"/>\nAdd comment: <!--[AUTO-FIX] UID synchronized-->"
     },
     "NCX-002": {
       "description": "Missing toc attribute",
-      "hint": "Logic: Add toc='ncx'."
+      "hint": "Logic: OPF manifest missing toc attribute\nFIX: ADD toc=\"ncx\" to spine element\n<spine toc=\"ncx\"> where ncx is manifest item id\nAdd comment: <!--[AUTO-FIX] toc attribute added-->"
     },
     "NCX-003": {
       "description": "NCX file required",
-      "hint": "Logic: Generate NCX."
+      "hint": "Logic: NCX structure incomplete\nFIX: GENERATE complete NCX with navMap\nInclude all spine items in navMap\nAdd comment: <!--[AUTO-FIX] NCX completed-->"
     },
     "NCX-004": {
       "description": "NCX ID contains whitespace",
-      "hint": "Logic: Strip spaces."
+      "hint": "Logic: NCX text has leading/trailing whitespace\nFIX: STRIP spaces from navLabel text\n<text> Chapter 1</text> → <text>Chapter 1</text>\nAdd comment: <!--[AUTO-FIX] Whitespace trimmed-->"
     },
     "NCX-005": {
       "description": "page-list found",
-      "hint": "Valid."
+      "hint": "Valid: page-list in NCX\nOptional enhancement, not required\nNo fix needed"
     },
     "NCX-006": {
       "description": "Empty text label",
@@ -461,15 +461,15 @@
     },
     "OPF-004b": {
       "description": "Invalid prefix name",
-      "hint": "Logic: Normalize."
+      "hint": "Logic: Invalid prefix name\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-004b fixed-->"
     },
     "OPF-004c": {
       "description": "Missing prefix colon",
-      "hint": "Logic: Add colon."
+      "hint": "Logic: Missing prefix colon\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-004c fixed-->"
     },
     "OPF-004d": {
       "description": "Prefix separation error",
-      "hint": "Logic: Fix spacing."
+      "hint": "Logic: Prefix separation error\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-004d fixed-->"
     },
     "OPF-004e": {
       "description": "Prefix whitespace error",
@@ -477,7 +477,7 @@
     },
     "OPF-004f": {
       "description": "Spacing between mappings error",
-      "hint": "Logic: Normalize."
+      "hint": "Logic: Spacing between mappings error\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-004f fixed-->"
     },
     "OPF-005": {
       "description": "Prefix URI missing",
@@ -493,7 +493,7 @@
     },
     "OPF-007a": {
       "description": "Underscore prefix prohibited",
-      "hint": "Logic: Prepend 'x'."
+      "hint": "Logic: Underscore prefix prohibited\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-007a fixed-->"
     },
     "OPF-007b": {
       "description": "Default vocabulary redeclaration",
@@ -525,7 +525,7 @@
     },
     "OPF-014": {
       "description": "Attribute declaration required",
-      "hint": "Logic: Add default."
+      "hint": "Logic: Attribute declaration required\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-014 fixed-->"
     },
     "OPF-015": {
       "description": "Attribute declaration prohibited",
@@ -541,11 +541,11 @@
     },
     "OPF-018": {
       "description": "Remote resources unused",
-      "hint": "Logic: Remove attribute."
+      "hint": "Logic: Remote resources unused\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-018 fixed-->"
     },
     "OPF-018b": {
       "description": "Remote resources check",
-      "hint": "Logic: Remove remote href."
+      "hint": "Logic: Remote resources check\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-018b fixed-->"
     },
     "OPF-019": {
       "description": "Spine missing",
@@ -573,7 +573,7 @@
     },
     "OPF-029": {
       "description": "Media type mismatch",
-      "hint": "Logic: Update OPF."
+      "hint": "Logic: Media type mismatch\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-029 fixed-->"
     },
     "OPF-030": {
       "description": "unique-identifier missing",
@@ -581,7 +581,7 @@
     },
     "OPF-031": {
       "description": "Guide reference missing",
-      "hint": "Logic: Add to manifest."
+      "hint": "Logic: Guide reference missing\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-031 fixed-->"
     },
     "OPF-032": {
       "description": "Invalid guide reference",
@@ -589,63 +589,63 @@
     },
     "OPF-033": {
       "description": "No linear resources",
-      "hint": "Logic: Set `linear='yes'`."
+      "hint": "Logic: No linear resources\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-033 fixed-->"
     },
     "OPF-034": {
       "description": "Duplicate references",
-      "hint": "Logic: Deduplicate."
+      "hint": "Logic: Invalid metadata date format\nFIX: Use ISO 8601 format YYYY-MM-DD\nExample: <dc:date>2024</dc:date> → <dc:date>2024-01-01</dc:date>\nOr for modified: <meta property=\"dcterms:modified\">2024-01-01T00:00:00Z</meta>\nAdd comment: <!--[AUTO-FIX] Date format corrected-->"
     },
     "OPF-035": {
       "description": "text/html inappropriate",
-      "hint": "Logic: Set type `application/xhtml+xml`."
+      "hint": "Logic: Contributor/creator role format error\nFIX: Use marc relator codes\nExamples: aut (author), ill (illustrator), edt (editor)\n<meta refines=\"#creator\" property=\"role\" scheme=\"marc:relators\">aut</meta>\nAdd comment: <!--[AUTO-FIX] Role format corrected-->"
     },
     "OPF-036": {
       "description": "Video support caution",
-      "hint": "Valid."
+      "hint": "Logic: Video support caution\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-036 fixed-->"
     },
     "OPF-037": {
       "description": "Unused media type",
-      "hint": "Cleanup: Delete file."
+      "hint": "Logic: Direction (page-progression) invalid\nFIX: Use valid values only: ltr, rtl, default\n<spine page-progression-direction=\"invalid\"> → <spine page-progression-direction=\"ltr\">\nAdd comment: <!--[AUTO-FIX] Direction corrected-->"
     },
     "OPF-038": {
       "description": "OEBPS 1.2 type error",
-      "hint": "Logic: Update type."
+      "hint": "Logic: Language tag format invalid\nFIX: Use BCP 47 language codes\nExamples: en, en-US, zh-CN, ja, ko, fr-FR\n<dc:language>eng</dc:language> → <dc:language>en</dc:language>\nAdd comment: <!--[AUTO-FIX] Language tag corrected-->"
     },
     "OPF-039": {
       "description": "OEBPS 1.2 CSS error",
-      "hint": "Logic: Update type."
+      "hint": "Logic: Identifier scheme invalid\nFIX: Use recognized schemes: ISBN, DOI, UUID\nExample: <dc:identifier id=\"BookId\">urn:isbn:978-...</dc:identifier>\nOr: urn:uuid:... for generated IDs\nAdd comment: <!--[AUTO-FIX] Identifier scheme corrected-->"
     },
     "OPF-040": {
       "description": "Fallback item missing",
-      "hint": "Logic: Remove item."
+      "hint": "Logic: Meta property format error\nFIX: Use proper property names from EPUB vocabulary\nExamples: dcterms:modified, schema:accessMode\nCheck property prefix is declared\nAdd comment: <!--[AUTO-FIX] Property format corrected-->"
     },
     "OPF-041": {
       "description": "Fallback stylesheet missing",
-      "hint": "Logic: Remove ref."
+      "hint": "Logic: Refines attribute points to nothing\nFIX: Ensure refines=\"#id\" points to existing element\nOr REMOVE meta element with bad refines\n<meta refines=\"#missing\"> → remove or fix reference\nAdd comment: <!--[AUTO-FIX] Invalid refines removed-->"
     },
     "OPF-042": {
       "description": "Disallowed spine types",
-      "hint": "Logic: Remove from spine."
+      "hint": "Logic: Collection type invalid\nFIX: Use valid collection types\nValid: series, set, index, preview, manifest\n<collection type=\"invalid\"> → <collection type=\"series\">\nAdd comment: <!--[AUTO-FIX] Collection type corrected-->"
     },
     "OPF-043": {
       "description": "Non-standard type fallback missing",
-      "hint": "Logic: Add fallback to dummy txt."
+      "hint": "Logic: Spine toc attribute references nothing\nFIX: Ensure toc=\"ncx\" points to valid manifest item\nOr REMOVE toc attribute\n<spine toc=\"invalid\"> → <spine> or fix reference\nAdd comment: <!--[AUTO-FIX] TOC reference corrected-->"
     },
     "OPF-044": {
       "description": "Non-standard fallback chain",
-      "hint": "Logic: Break chain."
+      "hint": "Logic: Item properties invalid value\nFIX: Use only valid properties\nValid: cover-image, mathml, nav, remote-resources, scripted, svg\nRemove invalid values\nAdd comment: <!--[AUTO-FIX] Invalid properties removed-->"
     },
     "OPF-045": {
       "description": "Fallback cycle",
-      "hint": "Logic: Remove fallback."
+      "hint": "Logic: Fallback chain circular reference\nFIX: BREAK circular fallback references\nitem A fallback=\"B\", item B fallback=\"A\" → remove one\nAdd comment: <!--[AUTO-FIX] Circular fallback removed-->"
     },
     "OPF-046": {
       "description": "Script property missing",
-      "hint": "Logic: Add property."
+      "hint": "Logic: Media overlay not properly linked\nFIX: Ensure media-overlay attribute points to valid SMIL\n<item media-overlay=\"missing\"> → fix or remove attribute\nSMIL must be in manifest\nAdd comment: <!--[AUTO-FIX] Overlay reference fixed-->"
     },
     "OPF-047": {
       "description": "OEBPS 1.2 syntax",
-      "hint": "Logic: Remove guide."
+      "hint": "Logic: Guide reference type deprecated\nFIX: Replace with nav landmarks\nGuide is EPUB 2, use <nav epub:type=\"landmarks\"> in EPUB 3\nOr remove guide section entirely\nAdd comment: <!--[AUTO-FIX] Deprecated guide handled-->"
     },
     "OPF-048": {
       "description": "unique-identifier attribute missing",
@@ -653,15 +653,15 @@
     },
     "OPF-049": {
       "description": "ID missing",
-      "hint": "Logic: Generate ID."
+      "hint": "Logic: Metadata element in wrong order\nFIX: Reorder metadata elements\nOrder: identifier, title, language, then others\nAdd comment: <!--[AUTO-FIX] Metadata reordered-->"
     },
     "OPF-050": {
       "description": "TOC type error",
-      "hint": "Logic: Fix type."
+      "hint": "Logic: Required metadata missing\nFIX: ADD missing required elements\nRequired: dc:identifier, dc:title, dc:language, dcterms:modified\nAdd all missing elements with AUTO-FIX placeholders\nAdd comment: <!--[AUTO-FIX] Required metadata added-->"
     },
     "OPF-052": {
       "description": "Role value error",
-      "hint": "Logic: Set to `aut`."
+      "hint": "Logic: Role value error\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-052 fixed-->"
     },
     "OPF-053": {
       "description": "Date syntax warning",
@@ -681,15 +681,15 @@
     },
     "OPF-058": {
       "description": "Nav TOC not referenced",
-      "hint": "Logic: Add property."
+      "hint": "Logic: Nav TOC not referenced\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-058 fixed-->"
     },
     "OPF-059": {
       "description": "NCX TOC not referenced",
-      "hint": "Logic: Add to manifest."
+      "hint": "Logic: NCX TOC not referenced\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-059 fixed-->"
     },
     "OPF-060": {
       "description": "Duplicate items",
-      "hint": "Logic: Delete duplicates."
+      "hint": "Logic: Duplicate items\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-060 fixed-->"
     },
     "OPF-061": {
       "description": "Duplicate items (normalized)",
@@ -697,15 +697,15 @@
     },
     "OPF-062": {
       "description": "Adobe page-map",
-      "hint": "Logic: Delete."
+      "hint": "Logic: Adobe page-map\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-062 fixed-->"
     },
     "OPF-063": {
       "description": "page-map not found",
-      "hint": "Logic: Delete ref."
+      "hint": "Logic: page-map not found\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-063 fixed-->"
     },
     "OPF-064": {
       "description": "Validation profile info",
-      "hint": "Valid."
+      "hint": "Logic: Validation profile info\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-064 fixed-->"
     },
     "OPF-065": {
       "description": "Metadata cycle",
@@ -713,19 +713,19 @@
     },
     "OPF-066": {
       "description": "Pagination source missing",
-      "hint": "Logic: Add dummy `<dc:source>[AUTO-FIX] Source</dc:source>`."
+      "hint": "Logic: Pagination source missing\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-066 fixed-->"
     },
     "OPF-067": {
       "description": "Resource listed twice",
-      "hint": "Logic: Deduplicate."
+      "hint": "Logic: Resource listed twice\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-067 fixed-->"
     },
     "OPF-068": {
       "description": "Unknown collection role",
-      "hint": "Logic: Set `distributor`."
+      "hint": "Logic: Unknown collection role\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-068 fixed-->"
     },
     "OPF-069": {
       "description": "idpf.org role prohibited",
-      "hint": "Logic: Remove."
+      "hint": "Logic: idpf.org role prohibited\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-069 fixed-->"
     },
     "OPF_070": {
       "description": "Invalid role URI",
@@ -733,7 +733,7 @@
     },
     "OPF-071": {
       "description": "Index collection error",
-      "hint": "Logic: Delete."
+      "hint": "Logic: Index collection error\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-071 fixed-->"
     },
     "OPF-072": {
       "description": "Empty metadata",
@@ -741,51 +741,51 @@
     },
     "OPF-073": {
       "description": "External identifier prohibited",
-      "hint": "Logic: Remove."
+      "hint": "Logic: External identifier prohibited\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-073 fixed-->"
     },
     "OPF-074": {
       "description": "Duplicate declaration",
-      "hint": "Logic: Delete."
+      "hint": "Logic: Duplicate declaration\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-074 fixed-->"
     },
     "OPF-075": {
       "description": "Preview collection error",
-      "hint": "Logic: Delete."
+      "hint": "Logic: Preview collection error\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-075 fixed-->"
     },
     "OPF-076": {
       "description": "Fragment identifier prohibited",
-      "hint": "Logic: Remove fragment."
+      "hint": "Logic: Fragment identifier prohibited\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-076 fixed-->"
     },
     "OPF-077": {
       "description": "Data navigation spine prohibited",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Data navigation spine prohibited\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-077 fixed-->"
     },
     "OPF-078": {
       "description": "Missing preface content",
-      "hint": "Valid."
+      "hint": "Logic: Missing preface content\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-078 fixed-->"
     },
     "OPF-079": {
       "description": "Dictionary type declaration required",
-      "hint": "Logic: Add type."
+      "hint": "Logic: Dictionary type declaration required\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-079 fixed-->"
     },
     "OPF-080": {
       "description": "Search key map extension",
-      "hint": "Logic: Rename."
+      "hint": "Logic: Search key map extension\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-080 fixed-->"
     },
     "OPF-081": {
       "description": "Dictionary resource missing",
-      "hint": "Logic: Delete."
+      "hint": "Logic: Dictionary resource missing\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-081 fixed-->"
     },
     "OPF-082": {
       "description": "Multiple search key maps",
-      "hint": "Logic: Keep first."
+      "hint": "Logic: Multiple search key maps\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-082 fixed-->"
     },
     "OPF-083": {
       "description": "Search key map missing",
-      "hint": "Logic: Delete dict."
+      "hint": "Logic: Search key map missing\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-083 fixed-->"
     },
     "OPF-084": {
       "description": "Invalid dictionary resource",
-      "hint": "Logic: Fix type."
+      "hint": "Logic: Invalid dictionary resource\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-084 fixed-->"
     },
     "OPF-085": {
       "description": "Invalid UUID",
@@ -793,31 +793,31 @@
     },
     "OPF-086": {
       "description": "Deprecated attribute usage",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Deprecated attribute usage\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-086 fixed-->"
     },
     "OPF-086b": {
       "description": "epub:type deprecated",
-      "hint": "Logic: Remove."
+      "hint": "Logic: epub:type deprecated\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-086b fixed-->"
     },
     "OPF-087": {
       "description": "Disallowed epub:type",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Disallowed epub:type\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-087 fixed-->"
     },
     "OPF-088": {
       "description": "Unrecognized epub:type",
-      "hint": "Logic: Locate the `epub:type` attribute and DELETE only the attribute (keep the tag). Add comment nearby: ``."
+      "hint": "Logic: Unrecognized epub:type\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-088 fixed-->"
     },
     "OPF-089": {
       "description": "Alternate keyword error",
-      "hint": "Logic: Remove keyword."
+      "hint": "Logic: Alternate keyword error\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-089 fixed-->"
     },
     "OPF-090": {
       "description": "Recommended MIME type",
-      "hint": "Logic: Fix type."
+      "hint": "Logic: Recommended MIME type\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-090 fixed-->"
     },
     "OPF-097": {
       "description": "Unused resource (orphan file)",
-      "hint": "Cleanup: Delete file."
+      "hint": "Logic: Unused resource (orphan file)\nFIX: Check error message for specific location and fix\nLocation: content.opf file\nCommon fixes:\n- Remove invalid/duplicate attributes\n- Correct attribute values to match spec\n- Add missing required elements/attributes  \n- Fix XML structure and namespaces\nAdd comment: <!--[AUTO-FIX] OPF-097 fixed-->"
     },
     "PKG-001": {
       "description": "Version mismatch",
@@ -877,7 +877,7 @@
     },
     "PKG-016": {
       "description": "Lowercase extension recommended",
-      "hint": "Logic: Lowercase."
+      "hint": "Logic: Filename has uppercase characters\nFIX: RENAME to lowercase\nExample: Chapter.xhtml → chapter.xhtml\nUpdate ALL references in manifest, spine, nav\nAdd comment: <!--[AUTO-FIX] Filename lowercased-->"
     },
     "PKG-017": {
       "description": "Unusual extension",
@@ -885,7 +885,7 @@
     },
     "PKG-018": {
       "description": "EPUB file missing",
-      "hint": "Critical: Stop."
+      "hint": "Critical: ZIP corrupted or invalid\nFIX: Cannot auto-fix - file needs manual rebuild\nRepackage EPUB from source files\nThis requires user intervention"
     },
     "PKG-020": {
       "description": "OPF file missing",
@@ -897,15 +897,15 @@
     },
     "PKG-022": {
       "description": "Extension mismatch",
-      "hint": "Logic: Rename."
+      "hint": "Logic: Reserved filename used\nFIX: RENAME file to non-reserved name\nReserved: mimetype, META-INF/, container.xml\nChoose different name, update references\nAdd comment: <!--[AUTO-FIX] Filename changed-->"
     },
     "PKG-023": {
       "description": "EPUB 2 validation",
-      "hint": "Valid."
+      "hint": "Valid: EPUB 2 validation passed\nInformational - no fix needed"
     },
     "PKG-024": {
       "description": "Unusual extension info",
-      "hint": "Valid."
+      "hint": "Valid: Unusual file extension noted\nInformational - file may work but extension is non-standard\nConsider renaming to standard extension"
     },
     "RSC-001": {
       "description": "Referenced resource missing from EPUB",
@@ -913,15 +913,15 @@
     },
     "RSC-002": {
       "description": "container.xml missing",
-      "hint": "Logic: Create."
+      "hint": "Logic: container.xml missing\nFIX: Check manifest and file references\nLocation: Various files and manifest  \nCommon fixes:\n- Add missing files to manifest\n- Remove references to non-existent files\n- Fix file paths and encodings\n- Resolve circular references\nAdd comment: <!--[AUTO-FIX] RSC-002 fixed-->"
     },
     "RSC-003": {
       "description": "rootfile missing",
-      "hint": "Logic: Add."
+      "hint": "Logic: rootfile missing\nFIX: Check manifest and file references\nLocation: Various files and manifest  \nCommon fixes:\n- Add missing files to manifest\n- Remove references to non-existent files\n- Fix file paths and encodings\n- Resolve circular references\nAdd comment: <!--[AUTO-FIX] RSC-003 fixed-->"
     },
     "RSC-004": {
       "description": "Encrypted file",
-      "hint": "Logic: Delete encryption.xml."
+      "hint": "Logic: core media type used incorrectly\nFIX: Ensure core media types in manifest\nCore types: xhtml, css, jpg, png, gif, svg\nAll must be in manifest with correct media-type\nAdd comment: <!--[AUTO-FIX] Media type corrected-->"
     },
     "RSC-005": {
       "description": "Parsing error (often empty properties)",
@@ -929,83 +929,83 @@
     },
     "RSC-006": {
       "description": "Remote resource",
-      "hint": "Logic: Identify `href` pointing to http/https. Remove the `href` attribute entirely to disable the link. Append text `([AUTO-FIX] Remote Link Disabled)`."
+      "hint": "Logic: File size limit exceeded\nFIX: COMPRESS file or split content\nImages: reduce resolution/quality\nText: split into multiple files\nAdd comment: <!--[AUTO-FIX] File optimized-->"
     },
     "RSC-006b": {
       "description": "External resource",
-      "hint": "Logic: Remove link."
+      "hint": "Logic: External resource\nFIX: Check manifest and file references\nLocation: Various files and manifest  \nCommon fixes:\n- Add missing files to manifest\n- Remove references to non-existent files\n- Fix file paths and encodings\n- Resolve circular references\nAdd comment: <!--[AUTO-FIX] RSC-006b fixed-->"
     },
     "RSC-007": {
       "description": "Referenced resource not found",
-      "hint": "Cascade Clean: Logic: The target file is missing. Delete the calling tag (link, img, script) completely. Insert comment: ``."
+      "hint": "Logic: Referenced resource missing\nFIX: Either ADD file OR remove reference\nSimilar to RSC-001 but for specific file types\nAdd or remove as appropriate\nAdd comment: <!--[AUTO-FIX] Reference resolved-->"
     },
     "RSC-007w": {
       "description": "Referenced resource not found (warning)",
-      "hint": "Cascade Clean: Logic: The target file is missing. Delete the calling tag (link, img, script) completely. Insert comment: ``."
+      "hint": "Logic: Referenced resource not found (warning)\nFIX: Check manifest and file references\nLocation: Various files and manifest  \nCommon fixes:\n- Add missing files to manifest\n- Remove references to non-existent files\n- Fix file paths and encodings\n- Resolve circular references\nAdd comment: <!--[AUTO-FIX] RSC-007w fixed-->"
     },
     "RSC-008": {
       "description": "Manifest not declared",
-      "hint": "Auto-Register: Add to manifest."
+      "hint": "Logic: File reference case mismatch\nFIX: Make references match actual filenames\nFile: Image.jpg, ref: image.jpg → fix to Image.jpg\nOr rename file to match reference\nAdd comment: <!--[AUTO-FIX] Case matched-->"
     },
     "RSC-009": {
       "description": "Fragment identifier error",
-      "hint": "Logic: Remove `#fragment`."
+      "hint": "Logic: Circular reference detected\nFIX: BREAK circular reference chain\nFile A links to B links to A → remove one link\nAdd comment: <!--[AUTO-FIX] Circular reference broken-->"
     },
     "RSC-010": {
       "description": "Non-standard resource",
-      "hint": "Logic: Delete resource."
+      "hint": "Logic: File referenced not in ZIP\nFIX: Either ADD missing file OR remove reference\nCheck manifest and navigation for this reference\nRemove or update to valid file\nAdd comment: <!--[AUTO-FIX] Invalid reference removed-->"
     },
     "RSC-011": {
       "description": "Non-spine reference",
-      "hint": "Logic: Add to spine."
+      "hint": "Logic: Resource in ZIP but not in manifest\nFIX: ADD item to manifest in content.opf\n<item id=\"item_id\" href=\"path/to/file\" media-type=\"...\"/>\nDetermine correct media-type based on extension\nAdd comment: <!--[AUTO-FIX] Item added to manifest-->"
     },
     "RSC-012": {
       "description": "Undefined fragment",
-      "hint": "Logic: Remove `#fragment`."
+      "hint": "Logic: Duplicate file in ZIP\nFIX: REMOVE duplicate, keep one copy\nUpdate all references to point to the kept file\nAdd comment: <!--[AUTO-FIX] Duplicate removed-->"
     },
     "RSC-013": {
       "description": "Stylesheet fragment",
-      "hint": "Logic: Remove `#fragment`."
+      "hint": "Logic: File size exceeded limit\nFIX: COMPRESS or SPLIT large file\nFor images: reduce quality/resolution\nFor text: split into multiple files\nAdd comment: <!--[AUTO-FIX] File optimized-->"
     },
     "RSC-014": {
       "description": "Incompatible fragment",
-      "hint": "Logic: Remove `#fragment`."
+      "hint": "Logic: Incompatible fragment\nFIX: Check manifest and file references\nLocation: Various files and manifest  \nCommon fixes:\n- Add missing files to manifest\n- Remove references to non-existent files\n- Fix file paths and encodings\n- Resolve circular references\nAdd comment: <!--[AUTO-FIX] RSC-014 fixed-->"
     },
     "RSC-015": {
       "description": "use tag fragment",
-      "hint": "Logic: Delete tag."
+      "hint": "Logic: use tag fragment\nFIX: Check manifest and file references\nLocation: Various files and manifest  \nCommon fixes:\n- Add missing files to manifest\n- Remove references to non-existent files\n- Fix file paths and encodings\n- Resolve circular references\nAdd comment: <!--[AUTO-FIX] RSC-015 fixed-->"
     },
     "RSC-016": {
       "description": "Fatal parsing error",
-      "hint": "Critical: Replace file content with `[AUTO-FIX] Fatal Error`."
+      "hint": "Logic: XML parsing error\nFIX: Correct XML structure\nClose all tags, fix syntax errors\nUse XML validator to find issues\nAdd comment: <!--[AUTO-FIX] XML structure corrected-->"
     },
     "RSC-017": {
       "description": "Parsing warning",
-      "hint": "Logic: Re-serialize."
+      "hint": "Logic: Parsing warning\nFIX: Check manifest and file references\nLocation: Various files and manifest  \nCommon fixes:\n- Add missing files to manifest\n- Remove references to non-existent files\n- Fix file paths and encodings\n- Resolve circular references\nAdd comment: <!--[AUTO-FIX] RSC-017 fixed-->"
     },
     "RSC-018": {
       "description": "Alternate image not found",
-      "hint": "Logic: Remove ref."
+      "hint": "Logic: Alternate image not found\nFIX: Check manifest and file references\nLocation: Various files and manifest  \nCommon fixes:\n- Add missing files to manifest\n- Remove references to non-existent files\n- Fix file paths and encodings\n- Resolve circular references\nAdd comment: <!--[AUTO-FIX] RSC-018 fixed-->"
     },
     "RSC-019": {
       "description": "metadata.xml missing",
-      "hint": "Logic: Generate."
+      "hint": "Logic: metadata.xml missing\nFIX: Check manifest and file references\nLocation: Various files and manifest  \nCommon fixes:\n- Add missing files to manifest\n- Remove references to non-existent files\n- Fix file paths and encodings\n- Resolve circular references\nAdd comment: <!--[AUTO-FIX] RSC-019 fixed-->"
     },
     "RSC-020": {
       "description": "Invalid URI",
-      "hint": "Logic: Encode."
+      "hint": "Logic: Invalid URI\nFIX: Check manifest and file references\nLocation: Various files and manifest  \nCommon fixes:\n- Add missing files to manifest\n- Remove references to non-existent files\n- Fix file paths and encodings\n- Resolve circular references\nAdd comment: <!--[AUTO-FIX] RSC-020 fixed-->"
     },
     "RSC-021": {
       "description": "Search key map error",
-      "hint": "Logic: Delete."
+      "hint": "Logic: Search key map error\nFIX: Check manifest and file references\nLocation: Various files and manifest  \nCommon fixes:\n- Add missing files to manifest\n- Remove references to non-existent files\n- Fix file paths and encodings\n- Resolve circular references\nAdd comment: <!--[AUTO-FIX] RSC-021 fixed-->"
     },
     "RSC-022": {
       "description": "Image cannot be verified",
-      "hint": "Valid."
+      "hint": "Logic: Image cannot be verified\nFIX: Check manifest and file references\nLocation: Various files and manifest  \nCommon fixes:\n- Add missing files to manifest\n- Remove references to non-existent files\n- Fix file paths and encodings\n- Resolve circular references\nAdd comment: <!--[AUTO-FIX] RSC-022 fixed-->"
     },
     "RSC-023": {
       "description": "URL host parsing error",
-      "hint": "Logic: Remove link."
+      "hint": "Logic: URL host parsing error\nFIX: Check manifest and file references\nLocation: Various files and manifest  \nCommon fixes:\n- Add missing files to manifest\n- Remove references to non-existent files\n- Fix file paths and encodings\n- Resolve circular references\nAdd comment: <!--[AUTO-FIX] RSC-023 fixed-->"
     },
     "RSC-030": {
       "description": "Non-standard or external path reference",
@@ -1021,11 +1021,11 @@
     },
     "SCP-003": {
       "description": "Local storage unsupported",
-      "hint": "Security: Delete script."
+      "hint": "Security: External script referenced\nFIX: DELETE script tag completely\nExternal scripts not allowed in EPUB for security\n<script src=\"http://...\"></script> → remove\nAdd comment: <!--[AUTO-FIX] External script removed-->"
     },
     "SCP-004": {
       "description": "EPUB 2 scripts prohibited",
-      "hint": "Logic: Delete script."
+      "hint": "Logic: Inline script found\nFIX: DELETE script or move to separate .js file\nIf essential: extract to JS file, add to manifest\nPreferably: remove entirely if not critical\nAdd comment: <!--[AUTO-FIX] Script handled-->"
     },
     "SCP-006": {
       "description": "Inline scripts found",
@@ -1033,15 +1033,15 @@
     },
     "SCP-007": {
       "description": "innerHtml usage",
-      "hint": "Logic: Comment out."
+      "hint": "Logic: Script uses forbidden API\nFIX: COMMENT OUT problematic code\n/*[AUTO-FIX] Forbidden API disabled*/\ndocument.write(...)\n/*[/AUTO-FIX]*/\nAdd comment"
     },
     "SCP-008": {
       "description": "innerText usage",
-      "hint": "Logic: Comment out."
+      "hint": "Logic: Script modifies DOM on load\nFIX: COMMENT OUT or remove\nAuto-executing scripts can cause issues\nComment out problematic sections\nAdd comment: <!--[AUTO-FIX] Auto-execution disabled-->"
     },
     "SCP-009": {
       "description": "Mouse events",
-      "hint": "Logic: Add `ontouchstart`."
+      "hint": "Logic: Touch events need ontouchstart\nFIX: ADD ontouchstart to html element\n<html ontouchstart=\"\">\nEnables iOS touch events\nAdd comment: <!--[AUTO-FIX] Touch support added-->"
     },
     "SCP_010": {
       "description": "Script included",
