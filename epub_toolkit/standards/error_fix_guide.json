@@ -209,7 +209,7 @@
     },
     "HTM-004": {
       "description": "Non-standard DOCTYPE",
-      "hint": "Logic: The DOCTYPE must be exactly \"<!DOCTYPE html>\". Fix this way:\n1. Find the line starting with \"<!DOCTYPE\" (usually line 2 or 3)\n2. DELETE the entire DOCTYPE line completely\n3. ADD exactly this line in its place: <!DOCTYPE html>\n4. Example BEFORE: <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n5. Example AFTER: <!DOCTYPE html>\n6. Make sure no extra spaces or attributes\n7. Add comment after: <!--[AUTO-FIX] DOCTYPE Fixed-->"
+      "hint": "CRITICAL: Line number may be -1 (unknown location)\nSEARCH the ENTIRE file for DOCTYPE:\n1. Use text search or regex to find ALL lines starting with \"<!DOCTYPE\"\n2. DOCTYPE is usually near the top (lines 1-5) right after <?xml> declaration\n3. DELETE the entire DOCTYPE line completely\n4. ADD exactly this line: <!DOCTYPE html>\n5. Example BEFORE: <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n6. Example AFTER: <!DOCTYPE html>\n7. Make sure NO extra spaces or attributes\n8. Add comment after: <!--[AUTO-FIX] DOCTYPE Fixed-->\n9. IMPORTANT: Replace ALL DOCTYPE declarations found, not just first one"
     },
     "HTM-005": {
       "description": "External references found",
@@ -249,11 +249,11 @@
     },
     "HTM-014": {
       "description": "Incorrect extension",
-      "hint": "Logic: Rename to .xhtml. Update refs."
+      "hint": "Logic: File has incorrect extension (.html instead of .xhtml required for EPUB)\n\nSTEP-BY-STEP FIX:\n1. IDENTIFY the problematic file from error message\n   Example: \"OEBPS/Text/chapter.html\" needs to be \"chapter.xhtml\"\n\n2. In content.opf MANIFEST section:\n   FIND: <item id=\"x\" href=\"Text/chapter.html\" media-type=\"application/xhtml+xml\"/>\n   CHANGE TO: <item id=\"x\" href=\"Text/chapter.xhtml\" media-type=\"application/xhtml+xml\"/>\n\n3. In ALL navigation files (nav.xhtml, toc.ncx):\n   FIND: <a href=\"chapter.html\">...</a>\n   CHANGE TO: <a href=\"chapter.xhtml\">...</a>\n\n4. In ALL other XHTML files that link to this file:\n   SEARCH entire EPUB for: href=\"chapter.html\"\n   REPLACE with: href=\"chapter.xhtml\"\n\n5. ADD comment in content.opf: <!--[AUTO-FIX] Extension corrected to .xhtml-->\n\nCRITICAL: Update ALL references in manifest, spine, nav, and other XHTML files\nNOTE: Actual file will be renamed during EPUB repackaging"
     },
     "HTM-014a": {
       "description": "XHTML extension required",
-      "hint": "Logic: Rename to .xhtml. Update refs."
+      "hint": "Logic: File has incorrect extension (.html instead of .xhtml required for EPUB)\n\nSTEP-BY-STEP FIX:\n1. IDENTIFY the problematic file from error message\n   Example: \"OEBPS/Text/chapter.html\" needs to be \"chapter.xhtml\"\n\n2. In content.opf MANIFEST section:\n   FIND: <item id=\"x\" href=\"Text/chapter.html\" media-type=\"application/xhtml+xml\"/>\n   CHANGE TO: <item id=\"x\" href=\"Text/chapter.xhtml\" media-type=\"application/xhtml+xml\"/>\n\n3. In ALL navigation files (nav.xhtml, toc.ncx):\n   FIND: <a href=\"chapter.html\">...</a>\n   CHANGE TO: <a href=\"chapter.xhtml\">...</a>\n\n4. In ALL other XHTML files that link to this file:\n   SEARCH entire EPUB for: href=\"chapter.html\"\n   REPLACE with: href=\"chapter.xhtml\"\n\n5. ADD comment in content.opf: <!--[AUTO-FIX] Extension corrected to .xhtml-->\n\nCRITICAL: Update ALL references in manifest, spine, nav, and other XHTML files\nNOTE: Actual file will be renamed during EPUB repackaging"
     },
     "HTM-017": {
       "description": "Language value mismatch",
@@ -441,23 +441,23 @@
     },
     "OPF-001": {
       "description": "Version parse error",
-      "hint": "Logic: Force version 3.0."
+      "hint": "Logic: Missing OPF file (content.opf not found)\nCRITICAL: This is a structural error - package file is missing\nFIX: Create basic content.opf with required structure\nTemplate:\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<package xmlns=\"http://www.idpf.org/2007/opf\" version=\"3.0\" unique-identifier=\"BookId\">\n  <metadata xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n    <dc:identifier id=\"BookId\">urn:uuid:AUTO-GENERATED</dc:identifier>\n    <dc:title>[AUTO-FIX] Untitled</dc:title>\n    <dc:language>en</dc:language>\n  </metadata>\n  <manifest></manifest>\n  <spine></spine>\n</package>\nAdd comment: <!--[AUTO-FIX] OPF created-->"
     },
     "OPF-002": {
       "description": "OPF file missing",
-      "hint": "Critical: Regenerate container.xml."
+      "hint": "Logic: OPF file has incorrect name/extension\nFIX: Rename to content.opf (standard name)\nUpdate container.xml to point to content.opf:\n<rootfile full-path=\"OEBPS/content.opf\" media-type=\"application/oebps-package+xml\"/>\nAdd comment: <!--[AUTO-FIX] OPF renamed-->"
     },
     "OPF-003": {
       "description": "Manifest missing",
-      "hint": "Auto-Register: Add to manifest."
+      "hint": "Logic: Missing required element in OPF\nFIX depends on which element is missing:\n- Missing <metadata>: ADD after <package>\n- Missing <manifest>: ADD after <metadata>\n- Missing <spine>: ADD after <manifest>\n- Missing dc:identifier: ADD to <metadata>\n- Missing dc:title: ADD to <metadata>\n- Missing dc:language: ADD to <metadata>\nExample: <dc:identifier id=\"BookId\">urn:uuid:AUTO-FIX</dc:identifier>\nAdd comment: <!--[AUTO-FIX] Required element added-->"
     },
     "OPF-004": {
       "description": "Prefix whitespace",
-      "hint": "Logic: Trim."
+      "hint": "Logic: Prefix attribute has whitespace (spaces/tabs)\nFIX: Remove ALL leading and trailing whitespace from prefix declarations\nLocation: content.opf <package> element\nExample BEFORE: prefix=\" calibre: http://xyz.com \"\nExample AFTER: prefix=\"calibre: http://xyz.com\"\nAdd comment: <!--[AUTO-FIX] Whitespace trimmed from prefix-->"
     },
     "OPF-004a": {
       "description": "Empty prefix",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Empty prefix declaration found\nFIX: REMOVE the empty prefix attribute completely\nLocation: content.opf <package> element\nExample BEFORE: <package prefix=\"\" ...>\nExample AFTER: <package ...> (prefix attribute removed)\nAdd comment: <!--[AUTO-FIX] Empty prefix removed-->"
     },
     "OPF-004b": {
       "description": "Invalid prefix name",
@@ -473,7 +473,7 @@
     },
     "OPF-004e": {
       "description": "Prefix whitespace error",
-      "hint": "Logic: Trim."
+      "hint": "Logic: Prefix attribute has whitespace error (same as OPF-004)\nFIX: Remove ALL leading and trailing whitespace\nLocation: content.opf <package prefix=\"...\">\nExample: prefix=\" dc:  http://...\" → prefix=\"dc: http://...\"\nAdd comment: <!--[AUTO-FIX] Prefix whitespace fixed-->"
     },
     "OPF-004f": {
       "description": "Spacing between mappings error",
@@ -481,15 +481,15 @@
     },
     "OPF-005": {
       "description": "Prefix URI missing",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Prefix declared but URI is missing\nFIX: Either ADD the URI or REMOVE the prefix entirely\nLocation: content.opf <package prefix=\"...\">\nIf you know the URI: prefix=\"myprefix: http://example.com/ns\"\nIf unknown: REMOVE the prefix\nExample: prefix=\"badprefix:\" → remove entirely\nAdd comment: <!--[AUTO-FIX] Invalid prefix removed-->"
     },
     "OPF-006": {
       "description": "Invalid URI",
-      "hint": "Logic: Encode."
+      "hint": "Logic: Invalid URI in prefix or href attribute\nFIX: Encode special characters in URI (spaces, brackets, etc.)\nUse URL encoding: space→%20, [→%5B, ]→%5D\nExample BEFORE: href=\"file name.html\"\nExample AFTER: href=\"file%20name.html\"\nAdd comment: <!--[AUTO-FIX] URI encoded-->"
     },
     "OPF-007": {
       "description": "Prefix redeclaration",
-      "hint": "Logic: Deduplicate."
+      "hint": "Logic: Duplicate attribute in same element\nFIX: REMOVE the duplicate, keep only first occurrence\nExample BEFORE: <package id=\"pkg\" id=\"pkg2\">\nExample AFTER: <package id=\"pkg\">\nAdd comment: <!--[AUTO-FIX] Duplicate attribute removed-->"
     },
     "OPF-007a": {
       "description": "Underscore prefix prohibited",
@@ -497,31 +497,31 @@
     },
     "OPF-007b": {
       "description": "Default vocabulary redeclaration",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Default vocabulary is redeclared (redundant)\nFIX: REMOVE the duplicate default vocabulary declaration\nLocation: content.opf <package prefix=\"...\">\nThe default vocabulary is already implied, no need to declare\nExample BEFORE: prefix=\"dcterms: http://purl.org/dc/terms/\"\nExample AFTER: (remove this prefix, it's default)\nAdd comment: <!--[AUTO-FIX] Redundant default vocabulary removed-->"
     },
     "OPF-008": {
       "description": "Core media handler prohibited",
-      "hint": "Logic: Remove bindings."
+      "hint": "Logic: Invalid prefixdeclaration format\nFIX: Correct prefix format to \"prefix: URI\"\nFormat: space-separated pairs, colon between prefix and URI\nExample BEFORE: prefix=\"badformathttp://xyz.com\"\nExample AFTER: prefix=\"myprefix: http://xyz.com\"\nAdd comment: <!--[AUTO-FIX] Prefix format corrected-->"
     },
     "OPF-009": {
       "description": "Duplicate handler",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Duplicate media type handler found\nFIX: REMOVE duplicate <mediaType> elements keeping only the first\nLocation: content.opf <bindings> section\nExample: If handler=\"script.js\" appears twice, delete second one\nAdd comment: <!--[AUTO-FIX] Duplicate handler removed-->"
     },
     "OPF-010": {
       "description": "Reference resolution error",
-      "hint": "Logic: Fix path."
+      "hint": "Logic: Metadata element in wrong namespace\nFIX: ADD correct namespace declaration\nExample: <meta property=\"dcterms:modified\">\nRequires: xmlns:dcterms=\"http://purl.org/dc/terms/\" in <metadata>\nOr use default namespace: <meta property=\"dcterms:modified\">\nAdd comment: <!--[AUTO-FIX] Namespace corrected-->"
     },
     "OPF-011": {
       "description": "Both page-spread values used",
-      "hint": "Logic: Keep 'right'."
+      "hint": "Logic: Invalid unique-identifier reference\nFIX: Make unique-identifier point to existing dc:identifier\nIn <package unique-identifier=\"BookId\">\nMust have: <dc:identifier id=\"BookId\">...</dc:identifier>\nIf mismatch: Either fix unique-identifier OR add matching dc:identifier\nAdd comment: <!--[AUTO-FIX] Unique-identifier linked-->"
     },
     "OPF-012": {
       "description": "Required metadata missing",
-      "hint": "Logic: Inject: Title='[AUTO-FIX] Untitled', Lang='en', ID='UUID'."
+      "hint": "Logic: Manifest item missing required href\nFIX: ADD href attribute or REMOVE item\nExample BEFORE: <item id=\"x\" media-type=\"...\"/>\nExample AFTER: <item id=\"x\" href=\"Text/file.xhtml\" media-type=\"...\"/>\nOr: Remove item if file doesn't exist\nAdd comment: <!--[AUTO-FIX] Href added or item removed-->"
     },
     "OPF-013": {
       "description": "Type mismatch",
-      "hint": "Logic: Update OPF type."
+      "hint": "Logic: Manifest item missing required id\nFIX: GENERATE unique ID and add to item\nExample BEFORE: <item href=\"file.xhtml\" media-type=\"...\"/>\nExample AFTER: <item id=\"item001\" href=\"file.xhtml\" media-type=\"...\"/>\nID must be unique across all manifest items\nAdd comment: <!--[AUTO-FIX] ID generated-->"
     },
     "OPF-014": {
       "description": "Attribute declaration required",
@@ -529,15 +529,15 @@
     },
     "OPF-015": {
       "description": "Attribute declaration prohibited",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Attribute declaration is prohibited in this context\nFIX: REMOVE the prohibited attribute completely\nLocation: check error message for specific element/attribute\nExample: Remove unsupported attributes from manifest items\nAdd comment: <!--[AUTO-FIX] Prohibited attribute removed-->"
     },
     "OPF-016": {
       "description": "full-path missing",
-      "hint": "Logic: Fix container.xml."
+      "hint": "Logic: Duplicate ID in manifest\nFIX: RENAME duplicate IDs to make unique\nExample: id=\"chapter1\" appears twice\nFix: id=\"chapter1\" and id=\"chapter1_2\"\nUpdate spine <itemref> if it references this ID\nAdd comment: <!--[AUTO-FIX] Duplicate ID resolved-->"
     },
     "OPF-017": {
       "description": "full-path empty",
-      "hint": "Logic: Fix container.xml."
+      "hint": "Logic: Item in spine but not in manifest\nFIX: ADD missing item to manifest first\nExample: <itemref idref=\"missing\"/> but no manifest item\nADD: <item id=\"missing\" href=\"Text/missing.xhtml\" media-type=\"...\"/>\nOr: REMOVE itemref from spine\nAdd comment: <!--[AUTO-FIX] Manifest item added-->"
     },
     "OPF-018": {
       "description": "Remote resources unused",
@@ -549,27 +549,27 @@
     },
     "OPF-019": {
       "description": "Spine missing",
-      "hint": "Logic: Generate spine."
+      "hint": "Logic: Spine itemref references non-existent ID\nFIX: Either ADD manifest item OR fix itemref OR remove itemref\nExample: <itemref idref=\"chapter99\"/> but no id=\"chapter99\" in manifest\nFix: Add item to manifest OR remove from spine\nAdd comment: <!--[AUTO-FIX] Spine reference fixed-->"
     },
     "OPF-021": {
       "description": "Unregistered URI scheme",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Unregistered URI scheme used (like app://, custom://)\nFIX: REMOVE the link or use standard scheme (http, https, mailto)\nLocation: <link> or <a href=\"...\">\nExample BEFORE: href=\"app://custom/path\"\nExample AFTER: Remove link OR change to \"http://...\"\nAdd comment: <!--[AUTO-FIX] Non-standard URI removed-->"
     },
     "OPF-025": {
       "description": "Value list prohibited",
-      "hint": "Logic: Split."
+      "hint": "Logic: Value list is prohibited (multiple values in single attribute)\nFIX: SPLIT into separate elements OR choose single value\nExample BEFORE: <meta property=\"dcterms:modified other\">value</meta>\nExample AFTER: <meta property=\"dcterms:modified\">value</meta>\nAdd comment: <!--[AUTO-FIX] Multiple values split-->"
     },
     "OPF-026": {
       "description": "Invalid attribute value",
-      "hint": "Logic: Reset."
+      "hint": "Logic: Invalid attribute value (doesn't match allowed values)\nFIX: RESET to valid value from EPUB 3 spec\nLocation: check error message for element/attribute\nExample: <spine page-progression-direction=\"invalid\"> \nFix to: page-progression-direction=\"ltr\" (or rtl, default)\nAdd comment: <!--[AUTO-FIX] Value reset to valid-->"
     },
     "OPF-027": {
       "description": "Undefined attribute",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Attribute is undefined/unknown in EPUB spec\nFIX: REMOVE the unknown attribute\nLocation: check error message for specific location\nExample: Remove custom/deprecated attributes\nAdd comment: <!--[AUTO-FIX] Unknown attribute removed-->"
     },
     "OPF-028": {
       "description": "Undeclared prefix",
-      "hint": "Logic: Add."
+      "hint": "Logic: Prefix is undeclared (used but not defined)\nFIX: ADD prefix declaration to <package prefix=\"...\">\nFind where prefix is used (like <meta property=\"myprefix:key\">)\nADD to package: prefix=\"myprefix: http://example.com/ns\"\nIf unsure of URI: REMOVE usage of undefined prefix\nAdd comment: <!--[AUTO-FIX] Prefix declared-->"
     },
     "OPF-029": {
       "description": "Media type mismatch",
@@ -577,7 +577,7 @@
     },
     "OPF-030": {
       "description": "unique-identifier missing",
-      "hint": "Logic: Generate UUID."
+      "hint": "Logic: The unique identifier was not found\nFIX: ADD dc:identifier with matching ID\n<package unique-identifier=\"BookId\"> requires:\n<dc:identifier id=\"BookId\">urn:uuid:SOME-UUID</dc:identifier>\nMust be in <metadata> section\nAdd comment: <!--[AUTO-FIX] Unique identifier added-->"
     },
     "OPF-031": {
       "description": "Guide reference missing",
@@ -585,7 +585,7 @@
     },
     "OPF-032": {
       "description": "Invalid guide reference",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Invalid guide reference type\nFIX: REMOVE invalid <guide> element OR fix reference type\nLocation: content.opf <guide> section\nValid types: cover, title-page, toc, index, glossary, etc.\nExample: <reference type=\"invalid\"> → remove this reference\nAdd comment: <!--[AUTO-FIX] Invalid guide reference removed-->"
     },
     "OPF-033": {
       "description": "No linear resources",
@@ -649,7 +649,7 @@
     },
     "OPF-048": {
       "description": "unique-identifier attribute missing",
-      "hint": "Logic: Add attribute."
+      "hint": "Logic: Meta element has invalid content\nFIX: Correct the content value based on property\nExample: <meta property=\"dcterms:modified\">invalid</meta>\nFix: Use ISO 8601 format: 2024-01-01T00:00:00Z\nCheck property requirements in EPUB spec\nAdd comment: <!--[AUTO-FIX] Meta content corrected-->"
     },
     "OPF-049": {
       "description": "ID missing",
@@ -665,19 +665,19 @@
     },
     "OPF-053": {
       "description": "Date syntax warning",
-      "hint": "Logic: Format YYYY-MM-DD."
+      "hint": "Logic: Itemref references item not suitable for spine\nFIX: Either change media-type OR remove from spine\nSpine can only contain: application/xhtml+xml items\nIf item is image/CSS: REMOVE itemref from spine\nAdd comment: <!--[AUTO-FIX] Non-document removed from spine-->"
     },
     "OPF-054": {
       "description": "Date validity error",
-      "hint": "Logic: Set to Today."
+      "hint": "Logic: Fall back item not found in manifest\nFIX: ADD fallback item OR remove fallback attribute\nExample: <item fallback=\"image1\"/> requires id=\"image1\" in manifest\nEither: ADD <item id=\"image1\" .../> OR remove fallback=\"...\"\nAdd comment: <!--[AUTO-FIX] Fallback resolved-->"
     },
     "OPF-055": {
       "description": "Empty tag",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Empty tag found (no content)\nFIX: REMOVE empty element completely\nLocation: various places in content.opf\nExample: <meta></meta> → remove\nExample: <title></title> → ADD content or remove\nAdd comment: <!--[AUTO-FIX] Empty element removed-->"
     },
     "OPF-056": {
       "description": "Non-standard audio",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Non-standard audio codec\nFIX: REMOVE audio element OR accept as warning only\nLocation: <audio> or <item> with audio media-type\nNote: Some audio formats may work but aren't in spec\nAdd comment: <!--[AUTO-FIX] Non-standard audio noted-->"
     },
     "OPF-058": {
       "description": "Nav TOC not referenced",
@@ -693,7 +693,7 @@
     },
     "OPF-061": {
       "description": "Duplicate items (normalized)",
-      "hint": "Logic: Rename."
+      "hint": "Logic: Duplicate items after normalization (same file, different paths)\nFIX: RENAME one file to make unique OR remove duplicate\nExample: \"file.html\" and \"File.html\" → rename one to \"file2.html\"\nUpdate ALL references in manifest, spine, navigation\nAdd comment: <!--[AUTO-FIX] Duplicate removed-->"
     },
     "OPF-062": {
       "description": "Adobe page-map",
@@ -709,7 +709,7 @@
     },
     "OPF-065": {
       "description": "Metadata cycle",
-      "hint": "Logic: Remove refines."
+      "hint": "Logic: Collection element issue\nFIX depends on specific error:\n- Invalid role: Use valid role from spec (index, manifest, preview)\n- Missing role: ADD role attribute\n- Empty collection: ADD collection items OR remove\nAdd comment: <!--[AUTO-FIX] Collection fixed-->"
     },
     "OPF-066": {
       "description": "Pagination source missing",
@@ -737,7 +737,7 @@
     },
     "OPF-072": {
       "description": "Empty metadata",
-      "hint": "Logic: Remove."
+      "hint": "Logic: Bindings handler issue\nFIX: Check handler points to valid script in manifest\n<mediaType handler=\"script1\" media-type=\"...\"/> requires:\n<item id=\"script1\" href=\"scripts/handler.js\" media-type=\"application/javascript\"/>\nEither: ADD script to manifest OR remove binding\nAdd comment: <!--[AUTO-FIX] Binding handler fixed-->"
     },
     "OPF-073": {
       "description": "External identifier prohibited",
@@ -789,7 +789,7 @@
     },
     "OPF-085": {
       "description": "Invalid UUID",
-      "hint": "Logic: Regenerate."
+      "hint": "Logic: Element value doesn't match pattern\nFIX: Correct value to match required pattern\nExample: dc:date requires ISO 8601: YYYY-MM-DD\nExample: dc:language requires BCP47: en, en-US, ko, etc.\nCheck error message for expected format\nAdd comment: <!--[AUTO-FIX] Value format corrected-->"
     },
     "OPF-086": {
       "description": "Deprecated attribute usage",
@@ -925,7 +925,7 @@
     },
     "RSC-005": {
       "description": "Parsing error (often empty properties)",
-      "hint": "Logic: RSC-005 is a general parsing error. Fix based on error message:\n1. If \"empty properties\" or \"properties=\"\"\": DELETE the empty properties attribute completely\n2. If \"required attribute missing\" (e.g., src on img, href on a):\n   - For img tag without src: Either REMOVE the entire img tag OR add src=\"placeholder.jpg\" and ADD a placeholder.jpg file to manifest\n   - For a tag without href: REMOVE href attribute or unwrap the link\n   - Use URL-safe values (no brackets, no spaces)\n3. If \"lang and xml:lang must have same value\": Make both attributes identical (e.g., both=\"ko\")\n4. If \"elements from namespace not allowed\": Remove or comment out the invalid element\n5. If other XML structure error: Fix broken tags, close unclosed tags\n6. Always add comment: <!--[AUTO-FIX] RSC-005 Fixed-->\n7. CRITICAL: If you add a resource reference (like src=\"file.jpg\"), you MUST also add that file to the manifest in content.opf"
+      "hint": "Logic: RSC-005 is a general parsing error. Fix based on context:\n\nCRITICAL for OPF files (content.opf):\nBEFORE fixing ANY error in OPF:\n1. READ and UNDERSTAND the entire OPF structure:\n   - <package> element with unique-identifier attribute\n   - <metadata> section with dc:identifier elements\n   - <manifest> section listing all files\n   - <spine> section defining reading order\n2. When fixing OPF errors:\n   - PRESERVE all <metadata> elements (dc:title, dc:identifier, dc:language, etc.)\n   - PRESERVE unique-identifier=\"BookId\" and matching <dc:identifier id=\"BookId\">\n   - PRESERVE all <manifest> and <spine> sections completely\n   - ONLY modify the specific problematic attribute mentioned in error\n3. VERIFY after changes:\n   - unique-identifier still points to valid dc:identifier\n   - All three sections (metadata, manifest, spine) still exist\n   - XML structure is well-formed\n\nFor XHTML files:\n1. If \"empty properties\" or properties=\"\": DELETE the empty properties attribute\n2. If \"required attribute missing\" (e.g., src on img):\n   - For img tag: REMOVE entire img tag OR add src=\"placeholder.jpg\"\n   - For a tag: REMOVE href attribute or unwrap link\n3. If \"lang and xml:lang must have same value\": Make both identical\n4. If \"elements from namespace not allowed\": Remove invalid element\n5. If other XML error: Fix tags, close unclosed tags\n\nAlways add: <!--[AUTO-FIX] RSC-005 Fixed-->"
     },
     "RSC-006": {
       "description": "Remote resource",
